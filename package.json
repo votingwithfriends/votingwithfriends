@@ -1,0 +1,19 @@
+{
+  "name": "votingwithfriends",
+  "version": "1.0.0",
+  "description": "Social ranked choice voting application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/votingwithfriends/votingwithfriends.git"
+  },
+  "author": "votingwithfriends",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/votingwithfriends/votingwithfriends/issues"
+  },
+  "homepage": "https://github.com/votingwithfriends/votingwithfriends#readme"
+}
