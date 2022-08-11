@@ -20,6 +20,14 @@ export const typeDefs = gql`
     user: User
   }
 
+  type Vote {
+    _id: ID
+    user: User
+    poll: Poll
+    choice: Choice
+    rank_value: Int
+  }
+
   type Query {
     users: [User]
     user(_id: ID!): User
