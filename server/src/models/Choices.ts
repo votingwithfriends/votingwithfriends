@@ -1,6 +1,6 @@
 import { Schema, model, Model } from "mongoose";
 
-const ChoicesSchema = new Schema({
+const choicesSchema = new Schema({
   choice_name: {
     type: String,
     required: true,
@@ -15,6 +15,6 @@ const ChoicesSchema = new Schema({
   },
 });
 
-const Choices = model("Choices", ChoicesSchema);
+const Choices = model("Choices", choicesSchema);
 
 export default Choices;
