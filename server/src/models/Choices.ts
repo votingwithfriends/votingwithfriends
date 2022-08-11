@@ -5,13 +5,10 @@ const choicesSchema = new Schema({
     type: String,
     required: true,
   },
-  poll_id: {
-    type: Number,
+  poll: {
+    type: Schema.Types.ObjectId,
+    ref: "Poll",
     required: true,
-    references: {
-      model: "poll",
-      key: "id",
-    },
   },
 });
 

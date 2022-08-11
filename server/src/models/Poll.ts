@@ -10,9 +10,9 @@ const pollSchema = new Schema({
     required: true,
     default: true,
   },
-  user_id: {
-    type: Number,
-    required: true,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
 });
 
