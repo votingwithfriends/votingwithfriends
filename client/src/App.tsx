@@ -1,4 +1,4 @@
-import Home from "./components/pages/Home";
+import Home from "./pages/Home";
 
 // TO-DO: Set up routing later
 
