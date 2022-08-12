@@ -2,5 +2,6 @@
 import { User } from "./User";
 import Choices from "./Choices";
 import Poll from "./Poll";
+import Vote from "./Vote";
 
-export { User, Choices, Poll };
+export { User, Choices, Poll, Vote };

@@ -1,4 +1,4 @@
-import { User } from "../models";
+import { User, Choices, Vote, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
 
 export const resolvers = {
@@ -8,6 +8,10 @@ export const resolvers = {
     },
     user: async (_: any, { _id }: any) => {
       return User.findOne({ _id }).select("-__v -password");
+    },
+    // get all choices
+    choices: async () => {
+      return await Choices.find().select("-__v").populate("poll");
     },
   },
   Mutation: {
@@ -31,6 +35,16 @@ export const resolvers = {
       }
 
       return user;
+    },
+    // post new choice
+    addChoice: async (_: any, args: any) => {
+      const choice = await Choices.create(args);
+      return choice;
+    },
+    // need some help on choice rank
+    rankedChoice: async (_: any, args: any) => {
+      const rankedChoice = await Choices.aggregate([]);
+      return rankedChoice;
     },
   },
 };

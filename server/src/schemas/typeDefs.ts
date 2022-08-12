@@ -16,7 +16,7 @@ export const typeDefs = gql`
   type Poll {
     _id: ID
     title: String
-    is_open: Booleam
+    is_open: Boolean
     user: User
   }
 
@@ -24,17 +24,20 @@ export const typeDefs = gql`
     _id: ID
     user: User
     poll: Poll
-    choice: Choice
+    choice: Choices
     rank_value: Int
   }
 
   type Query {
     users: [User]
     user(_id: ID!): User
+    choices: [Choices]
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): User
     login(email: String!, password: String!): User
+    addChoice(choice_name: String!, poll_id: ID!, user_id: ID!): Choices
+    rankedChoice(user_id: ID!): Choices
   }
 `;
