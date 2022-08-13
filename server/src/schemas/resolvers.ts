@@ -1,4 +1,4 @@
-import { User, Choices, Vote, Poll } from "../models";
+import { User, Vote, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
 
 export const resolvers = {
@@ -8,10 +8,6 @@ export const resolvers = {
     },
     user: async (_: any, { _id }: any) => {
       return User.findOne({ _id }).select("-__v -password");
-    },
-    // get all choices
-    choices: async () => {
-      return await Choices.find().select("-__v").populate("poll");
     },
     // get all polls
     polls: async (_: any, args: any) => {
@@ -45,9 +41,12 @@ export const resolvers = {
       return user;
     },
     // post new choice
-    addChoice: async (_: any, args: any) => {
-      const choice = await Choices.create(args);
-      return choice;
+    addChoice: async (_: any, { _id, choice_name }: any) => {
+      return await Poll.findOneAndUpdate(
+        _id,
+        { $push: { choices: { choice_name } } },
+        { new: true }
+      );
     },
     // need some help on choice rank
     // rankedChoice: async (_: any, args: any) => {
@@ -55,13 +54,32 @@ export const resolvers = {
     //   return rankedChoice;
     // },
 
-    updateChoice: async (_: any, args: any) => {
-      return await Choices.findByIdAndUpdate(
-        args._id,
-        { $push: { choice_name: args.choice_name } },
-        { new: true, runValidators: true }
+    updateChoice: async (_: any, { _id, choice_id, choice_name }: any) => {
+      const poll = await Poll.findByIdAndUpdate(
+        _id,
+        {
+          $pull: { choices: { choice_id: choice_id } },
+        },
+
+        { new: true }
+      );
+      return await Poll.findOneAndUpdate(
+        _id,
+        {
+          $push: { choices: { choice_name: choice_name } },
+        },
+        { new: true }
       );
     },
+    // delete choice
+    deleteChoice: async (_: any, { _id, choice_id }: any) => {
+      return await Poll.findByIdAndUpdate(
+        _id,
+        { $pull: { choices: { choice_id: choice_id } } },
+        { new: true }
+      );
+    },
+
     // create new poll
     addPoll: async (_: any, args: any) => {
       const poll = await Poll.create(args);

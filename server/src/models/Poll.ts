@@ -1,4 +1,5 @@
 import { Schema, model, Model, ObjectId } from "mongoose";
+import choicesSchema from "./Choices";
 
 interface IPoll {
   title: string;
@@ -22,12 +23,7 @@ const pollSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  choices: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Choices",
-    },
-  ],
+  choices: [choicesSchema],
 });
 
 const Poll = model<IPoll, PollModel>("Poll", pollSchema);
