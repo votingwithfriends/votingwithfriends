@@ -7,18 +7,18 @@ export const typeDefs = gql`
     email: String
   }
 
-  type Choices {
-    _id: ID
-    choice_name: String
-    poll: Poll
-  }
-
   type Poll {
     _id: ID
     title: String
     is_open: Boolean
     user: User
     choices: [Choices]
+  }
+
+  type Choices {
+    _id: ID
+    choice_name: String
+    choice_id: ID!
   }
 
   type Vote {
@@ -32,7 +32,6 @@ export const typeDefs = gql`
   type Query {
     users: [User]
     user(_id: ID!): User
-    choices: [Choices]
     polls: [Poll]
     poll(_id: ID!): Poll
   }
@@ -40,9 +39,10 @@ export const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): User
     login(email: String!, password: String!): User
-    addChoice(choice_name: String!, poll_id: ID!, user_id: ID!): Choices
+    addChoice(_id: ID!, choice_name: String!): Poll
     rankedChoice(user_id: ID!): Choices
-    updateChoice(_id: ID!, choice_name: String!): Choices
+    updateChoice(_id: ID!, choice_id: ID!, choice_name: String!): Poll
+    deleteChoice(_id: ID!, choice_id: ID!): Poll
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(_id: ID!, is_open: Boolean): Poll
     deletePoll(_id: ID!): Poll
