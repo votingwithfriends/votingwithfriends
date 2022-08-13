@@ -7,6 +7,10 @@ module.exports = {
       fontFamily: {
         lato: ["Lato", "sans-serif"],
       },
+      colors: {
+        "deep-dark": "#122233",
+        "deep-darker": "#0c1621",
+      },
     },
   },
   plugins: [],
