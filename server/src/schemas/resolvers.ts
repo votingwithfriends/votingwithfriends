@@ -13,7 +13,15 @@ export const resolvers = {
     choices: async () => {
       return await Choices.find().select("-__v").populate("poll");
     },
+    // get all polls
+    polls: async (_: any, args: any) => {
+      return await Poll.find().select("-__v").populate("choices");
+    },
+    poll: async (_: any, { _id }: any) => {
+      return Poll.findOne({ _id }).select("-__v").populate("choices");
+    },
   },
+
   Mutation: {
     addUser: async (_: any, args: any) => {
       const user = await User.create(args);
@@ -46,12 +54,29 @@ export const resolvers = {
     //   const rankedChoice = await Choices.([]);
     //   return rankedChoice;
     // },
+
     updateChoice: async (_: any, args: any) => {
       return await Choices.findByIdAndUpdate(
         args._id,
         { $push: { choice_name: args.choice_name } },
         { new: true, runValidators: true }
       );
+    },
+    // create new poll
+    addPoll: async (_: any, args: any) => {
+      const poll = await Poll.create(args);
+      return poll;
+    },
+    // update is_open for single poll
+    updatePoll: async (_: any, { _id, is_open }: any) => {
+      return await Poll.findOneAndUpdate(
+        _id,
+        { $set: { is_open } },
+        { new: true }
+      );
+    },
+    deletePoll: async (_: any, { _id }: any) => {
+      return await Poll.findOneAndDelete({ _id });
     },
   },
 };

@@ -1,4 +1,12 @@
-import { Schema, model, Model } from "mongoose";
+import { Schema, model, Model, ObjectId } from "mongoose";
+
+interface IPoll {
+  title: string;
+  is_open: boolean;
+  user: ObjectId;
+}
+
+type PollModel = Model<IPoll, {}>;
 
 const pollSchema = new Schema({
   title: {
@@ -14,8 +22,14 @@ const pollSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  choices: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Choices",
+    },
+  ],
 });
 
-const Poll = model("Poll", pollSchema);
+const Poll = model<IPoll, PollModel>("Poll", pollSchema);
 
 export default Poll;
