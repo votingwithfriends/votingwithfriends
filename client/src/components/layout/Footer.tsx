@@ -1,15 +1,15 @@
 import { IoLogoTwitter, IoLogoGithub } from "react-icons/io5";
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-100 dark:bg-deep-darker w-full p-6">
-      <div className="w-full max-w-screen-xl mx-auto">
+    <footer className="w-full bg-slate-100 p-6 dark:bg-deep-darker">
+      <div className="mx-auto w-full max-w-screen-xl">
         <article className="text-center md:text-left">
           <section className="flex flex-col gap-y-4">
-            <p className="font-black text-lg">
+            <p className="text-lg font-black leading-none">
               Voting With <br className="hidden md:block" />
               Friends
             </p>
-            <ul className="flex justify-center md:justify-start items-center text-2xl gap-x-4">
+            <ul className="flex items-center justify-center gap-x-4 text-2xl md:justify-start">
               <li>
                 <a href="https://github.com/votingwithfriends" target="_blank">
                   <IoLogoGithub />

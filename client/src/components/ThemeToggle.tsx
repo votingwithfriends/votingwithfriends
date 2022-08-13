@@ -1,42 +1,34 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { Theme } from "../context/Theme";
 import { IoSunny, IoMoon } from "react-icons/io5";
 
 interface Props {
-  styles?: String;
+  className?: String;
 }
 
-const ThemeToggle: React.FC<Props> = ({ styles }) => {
-  const [darkMode, setDarkMode] = useState<boolean>(
-    window.matchMedia("(prefers-color-scheme:dark)").matches
-  );
-
-  useEffect(() => {
-    const htmlRoot = document.documentElement;
-    darkMode
-      ? htmlRoot.classList.add("dark")
-      : htmlRoot.classList.remove("dark");
-  }, [darkMode]);
+const ThemeToggle: React.FC<Props> = ({ className }) => {
+  const { isDarkTheme, setIsDarkTheme } = useContext(Theme);
 
   return (
     <article
-      className={`bg-gray-200 dark:bg-deep-darker rounded-full p-2 overflow-hidden w-9 h-9 relative ${styles}`}
+      className={`relative h-9 w-9 overflow-hidden rounded-full bg-deep-dark p-2 dark:bg-deep-darker ${className}`}
     >
       <section
-        className={`flex items-center gap-x-4 absolute transition-all text-xl ease-in-out duration-700 top-2 ${
-          darkMode ? "translate-x-0" : "-translate-x-9"
+        className={`absolute top-2 flex items-center gap-x-4 text-xl transition-all duration-300 ease-in-out ${
+          isDarkTheme ? "translate-x-0" : "-translate-x-9"
         }`}
       >
         <IoSunny
-          className={`cursor-pointer transform transition-transform duration-1000 ${
-            darkMode ? "rotate-0" : "rotate-180"
+          className={`transform cursor-pointer transition-transform duration-700 ${
+            isDarkTheme ? "rotate-0 scale-100" : "rotate-180 scale-0"
           }`}
-          onClick={() => setDarkMode(false)}
+          onClick={() => setIsDarkTheme(false)}
         />
         <IoMoon
-          className={`cursor-pointer transform transition-transform duration-1000 ${
-            darkMode ? "rotate-180" : "rotate-0"
+          className={`transform cursor-pointer transition-transform duration-700 ${
+            isDarkTheme ? "rotate-180 scale-0" : "rotate-0 scale-100"
           }`}
-          onClick={() => setDarkMode(true)}
+          onClick={() => setIsDarkTheme(true)}
         />
       </section>
     </article>
