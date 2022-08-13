@@ -43,7 +43,8 @@ export const resolvers = {
     // post new choice
     addChoice: async (_: any, { _id, choice_name }: any) => {
       return await Poll.findOneAndUpdate(
-        _id,
+        { _id: _id },
+
         { $push: { choices: { choice_name } } },
         { new: true }
       );
@@ -56,7 +57,8 @@ export const resolvers = {
 
     updateChoice: async (_: any, { _id, choice_id, choice_name }: any) => {
       const poll = await Poll.findByIdAndUpdate(
-        _id,
+        { _id: _id },
+
         {
           $pull: { choices: { choice_id: choice_id } },
         },
@@ -64,7 +66,8 @@ export const resolvers = {
         { new: true }
       );
       return await Poll.findOneAndUpdate(
-        _id,
+        { _id: _id },
+
         {
           $push: { choices: { choice_name: choice_name } },
         },
@@ -74,7 +77,7 @@ export const resolvers = {
     // delete choice
     deleteChoice: async (_: any, { _id, choice_id }: any) => {
       return await Poll.findByIdAndUpdate(
-        _id,
+        { _id: _id },
         { $pull: { choices: { choice_id: choice_id } } },
         { new: true }
       );
@@ -88,7 +91,7 @@ export const resolvers = {
     // update is_open for single poll
     updatePoll: async (_: any, { _id, is_open }: any) => {
       return await Poll.findOneAndUpdate(
-        _id,
+        { _id: _id },
         { $set: { is_open } },
         { new: true }
       );
