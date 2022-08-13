@@ -42,9 +42,16 @@ export const resolvers = {
       return choice;
     },
     // need some help on choice rank
-    rankedChoice: async (_: any, args: any) => {
-      const rankedChoice = await Choices.aggregate([]);
-      return rankedChoice;
+    // rankedChoice: async (_: any, args: any) => {
+    //   const rankedChoice = await Choices.([]);
+    //   return rankedChoice;
+    // },
+    updateChoice: async (_: any, args: any) => {
+      return await Choices.findByIdAndUpdate(
+        args._id,
+        { $push: { choice_name: args.choice_name } },
+        { new: true, runValidators: true }
+      );
     },
   },
 };

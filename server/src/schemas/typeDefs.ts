@@ -39,5 +39,6 @@ export const typeDefs = gql`
     login(email: String!, password: String!): User
     addChoice(choice_name: String!, poll_id: ID!, user_id: ID!): Choices
     rankedChoice(user_id: ID!): Choices
+    updateChoice(_id: ID!, choice_name: String!): Choices
   }
 `;
