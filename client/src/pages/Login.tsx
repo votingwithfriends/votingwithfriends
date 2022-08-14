@@ -6,6 +6,7 @@ const Login: React.FC = () => {
   return (
     <Layout>
       <MotionWrapper>
+        
         <h1 className="mx-auto mb-4 text-center text-2xl">
           Welcome to Voting with Friends!!!
         </h1>

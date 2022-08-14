@@ -17,7 +17,8 @@ export const resolvers = {
   Mutation: {
     addUser: async (_: any, args: any) => {
       const user = await User.create(args);
-      return user;
+      const token = signToken(user);
+      return { token, user };
     },
     login: async (
       _: any,
@@ -33,8 +34,8 @@ export const resolvers = {
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-
-      return user;
+      const token = signToken(user);
+      return { token, user };
     },
     // post new choice
     addChoice: async (_: any, args: any) => {
