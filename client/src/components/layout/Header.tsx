@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import ThemeToggle from "../ThemeToggle";
+import NavBar from "../NavBar";
 
 const Header: React.FC = () => {
   return (
@@ -14,7 +15,8 @@ const Header: React.FC = () => {
         </Link>
 
         {/* Render other links here only if user has been signed in */}
-
+            <NavBar />
+         
         <ul className="hidden items-center gap-x-6 lg:flex">
           <li>
             <Link className="font-bold" to="/login">
