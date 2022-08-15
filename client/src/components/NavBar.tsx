@@ -20,13 +20,21 @@ const NavBar= () =>{
               {/*POLLS DROP DOWN MENU */}
               {/*I FIGURED POLLS WOULD BE BEST SUITED IN A DROPDOWN TO SAVE ON SPACE. CREATE POLL, VIEW POLL, ECT.  */}
               <div id="dropdownNavbar" className="hidden z-10 w-44 font-normal bg-slate-50 rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+
+                {/*DROP DOWN LIST*/}
                   <ul className="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                    
+                    {/*VIEW POLL*/}
                     <li>
                       <a href="#" className="block py-2 px-4">View Polls</a>
                     </li>
+
+                    {/*CREATE NEW POLL*/}
                     <li>
                     <a href="#" className="block py-2 px-4">Create New Poll</a>
                   </li>
+
+                  {/*DELETE POLL....ECT */}
                   <li>
                     <a href="#" className="block py-2 px-4">Delete Poll</a>
                   </li>
