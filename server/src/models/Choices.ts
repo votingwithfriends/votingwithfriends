@@ -1,17 +1,21 @@
-import { Schema, model, Model } from "mongoose";
+import { Schema, Types } from "mongoose";
 
 const choicesSchema = new Schema({
   choice_name: {
     type: String,
+    unique: true,
     required: true,
   },
-  poll: {
+  choice_id: {
     type: Schema.Types.ObjectId,
-    ref: "Poll",
-    required: true,
+    unique: true,
+    default: () => new Types.ObjectId(),
   },
+  // poll: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "Poll",
+  //   required: true,
+  // },
 });
 
-const Choices = model("Choices", choicesSchema);
-
-export default Choices;
+export default choicesSchema;
