@@ -5,6 +5,7 @@ interface IPoll {
   title: string;
   is_open: boolean;
   user: ObjectId;
+  choices: any;
 }
 
 type PollModel = Model<IPoll, {}>;
