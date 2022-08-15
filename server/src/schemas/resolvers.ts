@@ -1,5 +1,7 @@
 import { User, Vote, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
+import { IndexDefinition, IndexDirection } from "mongoose";
+import choicesSchema from "../models/Choices";
 
 export const resolvers = {
   Query: {
@@ -14,7 +16,13 @@ export const resolvers = {
       return await Poll.find().select("-__v").populate("choices");
     },
     poll: async (_: any, { _id }: any) => {
-      return Poll.findOne({ _id }).select("-__v").populate("choices");
+      const poll = await Poll.findOne({ _id })
+        .select("-__v")
+        .populate("choices");
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      return poll;
     },
   },
 
@@ -55,14 +63,35 @@ export const resolvers = {
     // },
 
     updateChoice: async (_: any, { _id, choice_id, choice_name }: any) => {
-      const poll = await Poll.findByIdAndUpdate(
+      // get poll to update choice on
+      const poll = await Poll.findById(_id);
+      // check that poll exists with given id
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      // create array of current choice ids
+      const choiceIdArray = poll.choices.map(
+        ({ choice_id: choice_id }: any) => ({
+          choice_id: choice_id,
+        })
+      );
+      // check to see if  given choice_id exists in array
+      let result = choiceIdArray.some(
+        (choice: any) => choice.choice_id.toHexString() === choice_id
+      );
+      // throw error if choice_id doesn't exist
+      if (!result) {
+        throw new AuthenticationError("No choice found with this ID");
+      }
+
+      const choice = await Poll.findByIdAndUpdate(
         { _id: _id },
         {
           $pull: { choices: { choice_id: choice_id } },
         },
-
-        { new: true }
+        { new: true, runValidators: true }
       );
+
       return await Poll.findOneAndUpdate(
         { _id: _id },
         {
@@ -87,14 +116,22 @@ export const resolvers = {
     },
     // update is_open for single poll
     updatePoll: async (_: any, { _id, is_open }: any) => {
-      return await Poll.findOneAndUpdate(
+      const poll = await Poll.findOneAndUpdate(
         { _id: _id },
         { $set: { is_open } },
         { new: true }
       );
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      return poll;
     },
     deletePoll: async (_: any, { _id }: any) => {
-      return await Poll.findOneAndDelete({ _id });
+      const poll = await Poll.findOneAndDelete({ _id });
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      return poll;
     },
   },
 };
