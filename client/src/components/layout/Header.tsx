@@ -15,8 +15,8 @@ const Header: React.FC = () => {
         </Link>
 
         {/* Render other links here only if user has been signed in */}
-            <NavBar />
-         
+        <NavBar />
+
         <ul className="hidden items-center gap-x-6 lg:flex">
           <li>
             <Link className="font-bold" to="/login">
@@ -25,7 +25,7 @@ const Header: React.FC = () => {
           </li>
           <li>
             <Link
-              className="rounded bg-deep-dark px-4 py-2 text-white dark:bg-teal-500"
+              className="rounded bg-deep-dark px-4 py-2 text-white hover:bg-green-600 dark:bg-teal-500 dark:hover:bg-teal-700"
               to="/signup"
             >
               Sign Up
