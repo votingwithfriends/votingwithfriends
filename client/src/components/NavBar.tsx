@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   return (
-    <nav className="border-gray-200 bg-slate-50 px-2 dark:bg-deep-dark dark:bg-deep-dark">
+    <nav className="font-bold">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
         <button
           data-collapse-toggle="navbar-multi-level"
@@ -27,20 +29,20 @@ const NavBar = () => {
           className="hidden w-full md:block md:w-auto"
           id="navbar-multi-level"
         >
-          <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-slate-50 md:text-sm md:font-medium md:dark:bg-deep-dark">
+          <ul className="mt-4 flex flex-col rounded-lg p-4 md:mt-0 md:flex-row md:space-x-8 md:text-sm ">
             <li>
-              <a
-                href="#"
+              <Link
+                to="/dashboard"
                 className="block rounded py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-white"
               >
                 Dashboard
-              </a>
+              </Link>
             </li>
             <li>
               <button
                 id="dropdownNavbarLink"
                 data-dropdown-toggle="dropdownNavbar"
-                className="flex w-full items-center justify-between border-b border-gray-100 py-2 pr-4 pl-3 font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white md:w-auto md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent"
+                className="flex w-full items-center justify-between border-b border-gray-100 py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:text-white md:w-auto md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent"
               >
                 Polls{" "}
                 <svg
@@ -61,7 +63,7 @@ const NavBar = () => {
               {/*I FIGURED POLLS WOULD BE BEST SUITED IN A DROPDOWN TO SAVE ON SPACE. CREATE POLL, VIEW POLL, ECT.  */}
               <div
                 id="dropdownNavbar"
-                className="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-slate-50 font-normal shadow dark:divide-gray-600 dark:bg-gray-700"
+                className="z-10 hidden w-44 divide-y divide-gray-100 rounded bg-slate-50 shadow dark:divide-gray-600 dark:bg-gray-700"
               >
                 {/*DROP DOWN LIST*/}
                 <ul

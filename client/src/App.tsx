@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import { Theme } from "./context/Theme";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
+import DashBoard from "./pages/Dashboard";
 
 // TO-DO: Set up routing later
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/dashboard" element={<DashBoard />} />
         </Routes>
       </Router>
     </Theme.Provider>
