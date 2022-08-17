@@ -1,6 +1,8 @@
 import Layout from "../components/layout/Layout";
 import MotionWrapper from "../components/layout/MotionWrapper";
 
+
+
 const SignUp: React.FC = () => {
   return (
     <Layout>
