@@ -1,6 +1,8 @@
 import Layout from "../components/layout/Layout";
 import MotionWrapper from "../components/layout/MotionWrapper";
 
+import React, { useState } from "react";
+
 const DashBoard: React.FC = () => {
   return (
     <Layout>
