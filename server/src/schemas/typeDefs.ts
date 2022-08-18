@@ -7,6 +7,20 @@ export const typeDefs = gql`
     email: String
   }
 
+
+  type Auth {
+    token: ID!
+    user: User
+  }
+
+  type Choices {
+    _id: ID
+    choice_name: String
+    poll: Poll
+  }
+
+
+ 
   type Poll {
     _id: ID
     title: String
