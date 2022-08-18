@@ -22,6 +22,9 @@ export const resolvers = {
       }
       return poll;
     },
+    votes: async (_: any, args: any) => {
+      return await Vote.find().select("-__v").populate("poll");
+    },
   },
 
   Mutation: {
@@ -190,6 +193,12 @@ export const resolvers = {
         throw new AuthenticationError("No poll found with this ID");
       }
       return poll;
+    },
+
+    // create new vote
+    addVote: async (_: any, args: any) => {
+      const vote = await Vote.create(args);
+      return vote;
     },
   },
 };

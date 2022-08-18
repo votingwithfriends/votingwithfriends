@@ -1,11 +1,11 @@
 import { Schema, model, Model } from "mongoose";
 
 const voteSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
+  // user: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
   poll: {
     type: Schema.Types.ObjectId,
     ref: "Poll",

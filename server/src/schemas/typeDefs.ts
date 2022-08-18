@@ -7,7 +7,6 @@ export const typeDefs = gql`
     email: String
   }
 
-
   type Auth {
     token: ID!
     user: User
@@ -19,8 +18,6 @@ export const typeDefs = gql`
     poll: Poll
   }
 
-
- 
   type Poll {
     _id: ID
     title: String
@@ -46,7 +43,6 @@ export const typeDefs = gql`
 
   type Vote {
     _id: ID
-    user: User
     poll: Poll
     choice: Choices
     rank_value: Int
@@ -57,6 +53,7 @@ export const typeDefs = gql`
     user(_id: ID!): User
     polls: [Poll]
     poll(_id: ID!): Poll
+    votes: [Vote]
   }
 
   type Mutation {
@@ -72,5 +69,6 @@ export const typeDefs = gql`
     addComment(_id: ID!, commentBody: String, username: String): Poll
     updateComment(_id: ID!, comment_id: ID!, commentBody: String!): Poll
     deleteComment(_id: ID!, comment_id: ID!): Poll
+    addVote(poll: String!, choice: String!, rank_value: Int!): Vote
   }
 `;
