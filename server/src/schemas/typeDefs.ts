@@ -13,12 +13,21 @@ export const typeDefs = gql`
     is_open: Boolean
     user: User
     choices: [Choices]
+    comments: [Comment]
   }
 
   type Choices {
     _id: ID
     choice_name: String
     choice_id: ID!
+  }
+
+  type Comment {
+    _id: ID
+    commentBody: String
+    username: String
+    createdAt: String
+    comment_id: ID
   }
 
   type Vote {
@@ -46,5 +55,8 @@ export const typeDefs = gql`
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(_id: ID!, is_open: Boolean): Poll
     deletePoll(_id: ID!): Poll
+    addComment(_id: ID!, commentBody: String, username: String): Poll
+    updateComment(_id: ID!, comment_id: ID!, commentBody: String!): Poll
+    deleteComment(_id: ID!, comment_id: ID!): Poll
   }
 `;

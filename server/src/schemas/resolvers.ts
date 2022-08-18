@@ -1,7 +1,5 @@
 import { User, Vote, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
-import { IndexDefinition, IndexDirection } from "mongoose";
-import choicesSchema from "../models/Choices";
 
 export const resolvers = {
   Query: {
@@ -49,6 +47,7 @@ export const resolvers = {
       return user;
     },
     // post new choice
+
     addChoice: async (_: any, { _id, choice_name }: any) => {
       return await Poll.findOneAndUpdate(
         { _id: _id },
@@ -103,6 +102,7 @@ export const resolvers = {
         { new: true }
       );
     },
+
     // delete choice
     deleteChoice: async (_: any, { _id, choice_id }: any) => {
       return await Poll.findByIdAndUpdate(
@@ -111,7 +111,61 @@ export const resolvers = {
         { new: true }
       );
     },
+    addComment: async (_: any, { _id, commentBody, username }: any) => {
+      return await Poll.findOneAndUpdate(
+        { _id: _id },
 
+        { $push: { comments: { commentBody, username } } },
+        { new: true }
+      );
+    },
+    updateComment: async (_: any, { _id, comment_id, commentBody }: any) => {
+      // get poll to update choice on
+      const poll = await Poll.findById(_id);
+      // check that poll exists with given id
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      // create array of current choice ids
+      const commentIdArray = poll.comments.map(
+        ({ comment_id: comment_id }: any) => ({
+          comment_id: comment_id,
+        })
+      );
+      // check to see if  given choice_id exists in array
+      let result = commentIdArray.some(
+        (comment: any) => comment.comment_id.toHexString() === comment_id
+      );
+      // throw error if choice_id doesn't exist
+      if (!result) {
+        throw new AuthenticationError("No choice found with this ID");
+      }
+
+      const comment = await Poll.findByIdAndUpdate(
+        { _id: _id },
+
+        {
+          $pull: { comments: { comment_id: comment_id } },
+        },
+        { new: true, runValidators: true }
+      );
+
+      return await Poll.findOneAndUpdate(
+        { _id: _id },
+
+        {
+          $push: { comments: { commentBody: commentBody } },
+        },
+        { new: true }
+      );
+    },
+    deleteComment: async (_: any, { _id, comment_id }: any) => {
+      return await Poll.findByIdAndUpdate(
+        { _id: _id },
+        { $pull: { comments: { comment_id: comment_id } } },
+        { new: true }
+      );
+    },
     // create new poll
     addPoll: async (_: any, args: any) => {
       const poll = await Poll.create(args);

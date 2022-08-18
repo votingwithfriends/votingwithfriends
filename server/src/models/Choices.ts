@@ -3,19 +3,15 @@ import { Schema, Types } from "mongoose";
 const choicesSchema = new Schema({
   choice_name: {
     type: String,
-    unique: true,
     required: true,
+    unique: false,
+    default: null,
   },
   choice_id: {
     type: Schema.Types.ObjectId,
-    unique: true,
+    unique: false,
     default: () => new Types.ObjectId(),
   },
-  // poll: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: "Poll",
-  //   required: true,
-  // },
 });
 
 export default choicesSchema;
