@@ -13,12 +13,6 @@ export const typeDefs = gql`
     user: User
   }
 
-  type Choices {
-    _id: ID
-    choice_name: String
-    poll: Poll
-  }
-
   type Poll {
     _id: ID
     title: String
@@ -59,7 +53,7 @@ export const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): User
+    login(email: String!, password: String!): Auth
     addChoice(_id: ID!, choice_name: String!): Poll
     rankedChoice(user_id: ID!): Choices
     updateChoice(_id: ID!, choice_id: ID!, choice_name: String!): Poll
