@@ -6,12 +6,18 @@ export const resolvers = {
   Query: {
     // get all users
     users: async () => {
-      return User.find().select("-__v -password");
+      return User.find().select("-__v -password -token");
     },
 
     // get a single user
     user: async (_: any, { _id }: any) => {
-      return User.findOne({ _id }).select("-__v -password");
+      const user = User.findOne({ _id }).select("-__v -password");
+
+      if (!user) {
+        throw new AuthenticationError("No user found with this id");
+      }
+
+      return user;
     },
 
     // get all polls
@@ -70,9 +76,9 @@ export const resolvers = {
     },
 
     // update is_open for single poll
-    updatePoll: async (_: any, { poll_id, is_open }: any) => {
+    updatePoll: async (_: any, { _id, is_open }: any) => {
       const poll = await Poll.findOneAndUpdate(
-        { _id: poll_id },
+        { _id },
         { $set: { is_open } },
         { new: true }
       );
@@ -83,8 +89,8 @@ export const resolvers = {
     },
 
     // delete a poll
-    deletePoll: async (_: any, { poll_id }: any) => {
-      const poll = await Poll.findOneAndDelete({ poll_id });
+    deletePoll: async (_: any, { _id }: any) => {
+      const poll = await Poll.findOneAndDelete({ _id });
       if (!poll) {
         throw new AuthenticationError("No poll found with this ID");
       }
