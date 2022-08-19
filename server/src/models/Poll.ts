@@ -2,6 +2,7 @@ import { Schema, model, Model, ObjectId } from "mongoose";
 import choicesSchema from "./Choices";
 import voteSchema from "./Vote";
 import commentSchema from "./Comment";
+import { User } from "./User";
 
 interface IPoll {
   title: string;
@@ -23,6 +24,7 @@ const pollSchema = new Schema({
     required: true,
     default: true,
   },
+
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",

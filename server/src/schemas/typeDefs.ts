@@ -43,6 +43,7 @@ export const typeDefs = gql`
   }
 
   type Query {
+    me: User
     users: [User]
     user(_id: ID!): User
     polls: [Poll]
@@ -55,14 +56,14 @@ export const typeDefs = gql`
     login(email: String!, password: String!): Auth
 
     addPoll(title: String!, is_open: Boolean): Poll
-    updatePoll(_id: ID!, is_open: Boolean): Poll
-    deletePoll(_id: ID!): Poll
-    addChoice(_id: ID!, choice_name: String!): Poll
-    updateChoice(_id: ID!, choice_id: ID!, choice_name: String!): Poll
-    deleteChoice(_id: ID!, choice_id: ID!): Poll
+    updatePoll(poll_id: ID!, is_open: Boolean): Poll
+    deletePoll(poll_id: ID!): Poll
+    addChoice(poll_id: ID!, choice_name: String!): Poll
+    updateChoice(poll_id: ID!, choice_id: ID!, choice_name: String!): Poll
+    deleteChoice(poll_id: ID!, choice_id: ID!): Poll
     addVote(rank_value: Int, user_id: String!, choice_id: String!): Poll
-    addComment(_id: ID!, comment_body: String, username: String): Poll
-    updateComment(_id: ID!, comment_id: ID!, comment_body: String!): Poll
-    deleteComment(_id: ID!, comment_id: ID!): Poll
+    addComment(poll_id: ID!, comment_body: String): Poll
+    updateComment(poll_id: ID!, comment_id: ID!, comment_body: String!): Poll
+    deleteComment(poll_id: ID!, comment_id: ID!): Poll
   }
 `;

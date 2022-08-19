@@ -1,9 +1,22 @@
 import { User, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
 import { signToken } from "../utils/auth";
+import { argsToArgsConfig } from "graphql/type/definition";
+import { ConnectionStates } from "mongoose";
+import { ValidationContext } from "graphql";
 
 export const resolvers = {
   Query: {
+    me: async (_: any, args: any, context: any) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
+        return userData;
+      }
+
+      throw new AuthenticationError("Not logged in");
+    },
     users: async () => {
       return User.find().select("-__v -password");
     },
@@ -21,6 +34,7 @@ export const resolvers = {
       if (!poll) {
         throw new AuthenticationError("No poll found with this ID");
       }
+
       return poll;
     },
   },
@@ -111,17 +125,29 @@ export const resolvers = {
         { new: true }
       );
     },
-    addComment: async (_: any, { poll_id, comment_body, username }: any) => {
-      return await Poll.findOneAndUpdate(
-        { _id: poll_id },
+    addComment: async (
+      _: any,
+      { poll_id, comment_body }: any,
+      context: any
+    ) => {
+      if (context.user) {
+        return await Poll.findOneAndUpdate(
+          { _id: poll_id },
 
-        { $push: { comments: { comment_body, username } } },
-        { new: true }
-      );
+          {
+            $push: {
+              comments: { comment_body, username: context.user.username },
+            },
+          },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("must be signed in to add comment");
     },
     updateComment: async (
       _: any,
-      { poll_id, comment_id, comment_body }: any
+      { poll_id, comment_id, comment_body }: any,
+      context: any
     ) => {
       // get poll to update choice on
       const poll = await Poll.findById(poll_id);
@@ -160,36 +186,69 @@ export const resolvers = {
         { new: true }
       );
     },
-    deleteComment: async (_: any, { poll_id, comment_id }: any) => {
-      return await Poll.findByIdAndUpdate(
-        { _id: poll_id },
-        { $pull: { comments: { _id: comment_id } } },
-        { new: true }
-      );
+    deleteComment: async (
+      _: any,
+      { poll_id, comment_id }: any,
+      context: any
+    ) => {
+      if (context.user) {
+        const poll = await Poll.findOne({ poll_id });
+        if (!poll) {
+          throw new AuthenticationError(
+            "You must be logged in to delete this comment"
+          );
+        }
+
+        return await Poll.findByIdAndUpdate(
+          { _id: poll_id },
+          { $pull: { comments: { _id: comment_id } } },
+          { new: true }
+        );
+      }
     },
     // create new poll
-    addPoll: async (_: any, args: any) => {
-      const poll = await Poll.create(args);
-      return poll;
+    addPoll: async (_: any, args: any, context: any) => {
+      if (context.user) {
+        const poll = await Poll.create({
+          ...args,
+          user: { _id: context.user._id, username: context.user.username },
+        });
+        return poll;
+      }
+      throw new AuthenticationError("Must be logged in to create a poll");
     },
     // update is_open for single poll
-    updatePoll: async (_: any, { poll_id, is_open }: any) => {
-      const poll = await Poll.findOneAndUpdate(
-        { _id: poll_id },
-        { $set: { is_open } },
-        { new: true }
-      );
-      if (!poll) {
-        throw new AuthenticationError("No poll found with this ID");
+    updatePoll: async (_: any, { poll_id, is_open }: any, context: any) => {
+      if (context.user) {
+        const poll = await Poll.findOne({ poll_id });
+        if (!poll) {
+          throw new AuthenticationError("No poll found with this ID");
+        }
+        if (poll.user.valueOf() === context.user._id) {
+          return await Poll.findOneAndUpdate(
+            { _id: poll_id },
+            { $set: { is_open } },
+            { new: true }
+          );
+        }
+        throw new AuthenticationError(
+          "You are not authorized to update this poll"
+        );
       }
-      return poll;
+      throw new AuthenticationError("You must be logged into update poll");
     },
-    deletePoll: async (_: any, { poll_id }: any) => {
-      const poll = await Poll.findOneAndDelete({ poll_id });
-      if (!poll) {
-        throw new AuthenticationError("No poll found with this ID");
+    deletePoll: async (_: any, { poll_id }: any, context: any) => {
+      if (context.user) {
+        const poll = await Poll.findOne({ poll_id });
+        if (!poll) {
+          throw new AuthenticationError("No poll found with this ID");
+        }
+        if (poll.user.valueOf() === context.user._id) {
+          return await Poll.findOneAndDelete({ poll_id });
+        }
+        throw new AuthenticationError("Not authorized to delete this poll");
       }
-      return poll;
+      throw new AuthenticationError("You must be logged in to delete a poll");
     },
   },
 };
