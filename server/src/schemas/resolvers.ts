@@ -1,4 +1,4 @@
-import { User, Vote, Poll } from "../models";
+import { User, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
 import { signToken } from "../utils/auth";
 
@@ -22,9 +22,6 @@ export const resolvers = {
         throw new AuthenticationError("No poll found with this ID");
       }
       return poll;
-    },
-    votes: async (_: any, args: any) => {
-      return await Vote.find().select("-__v").populate("poll");
     },
   },
 
@@ -194,12 +191,6 @@ export const resolvers = {
         throw new AuthenticationError("No poll found with this ID");
       }
       return poll;
-    },
-
-    // create new vote
-    addVote: async (_: any, args: any) => {
-      const vote = await Vote.create(args);
-      return vote;
     },
   },
 };
