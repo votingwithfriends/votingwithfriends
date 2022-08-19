@@ -20,8 +20,8 @@ const SignUp: React.FC = () => {
                       </h3>
 
                       {/*EMAIL BOX */}
-                      <div className="mb-3 flex items-center rounded-full border border-gray-200 bg-white pl-6">
-                        <span className="inline-block border-r border-gray-50 pr-3">
+                      <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
+                        <span className="inline-block pr-3">
                           {/*EMAIL ICON */}
                           <div className="text-xl text-black">
                             <AiOutlineMail />
@@ -37,8 +37,8 @@ const SignUp: React.FC = () => {
                       </div>
 
                       {/*USERNAME */}
-                      <div className="mb-6 flex items-center rounded-full border border-gray-200 bg-white pl-6">
-                        <span className="inline-block border-r border-gray-50 pr-3">
+                      <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
+                        <span className="inline-block pr-3">
                           {/*USENAME ICON */}
                           <div className="text-xl text-black">
                             <FiUserCheck />
@@ -52,8 +52,8 @@ const SignUp: React.FC = () => {
                       </div>
 
                       {/*PASSWORD BOX */}
-                      <div className="mb-3 flex items-center rounded-full border border-gray-200 bg-white pl-6">
-                        <span className="inline-block border-r border-gray-50 pr-3">
+                      <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
+                        <span className="inline-block pr-3">
                           {/*LOCK ICON */}
                           <div className="text-xl text-black">
                             <GrLock />
@@ -67,8 +67,8 @@ const SignUp: React.FC = () => {
                       </div>
 
                       {/*REPEAT PASSWORD BOX */}
-                      <div className="mb-6 flex items-center rounded-full border border-gray-200 bg-white pl-6">
-                        <span className="inline-block border-r border-gray-50 pr-3">
+                      <div className="mb-6 flex items-center rounded-full border border-gray-400 bg-white pl-6">
+                        <span className="inline-block pr-3">
                           {/*LOCK ICON */}
                           <div className="text-xl text-black">
                             <GrLock />

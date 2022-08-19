@@ -6,7 +6,7 @@ import NavBar from "../NavBar";
 const Header: React.FC = () => {
   return (
     <header className="mx-auto w-full max-w-screen-xl p-6">
-      <nav className="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <Link to="/">
           <p className="text-2xl font-black leading-none">
             Voting With <br />
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
         <section className="lg:hidden">
           <IoMenu className="text-3xl" />
         </section>
-      </nav>
+      </div>
     </header>
   );
 };
