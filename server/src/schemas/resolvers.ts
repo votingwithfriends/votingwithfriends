@@ -1,5 +1,6 @@
 import { User, Vote, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
+import { signToken } from "../utils/auth";
 
 export const resolvers = {
   Query: {
@@ -30,8 +31,8 @@ export const resolvers = {
   Mutation: {
     addUser: async (_: any, args: any) => {
       const user = await User.create(args);
-      // const token = signToken(user);
-      // return { token, user };
+      const token = signToken(user);
+      return { token, user };
     },
     login: async (
       _: any,
