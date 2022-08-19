@@ -4,6 +4,10 @@ import MotionWrapper from "../components/layout/MotionWrapper";
 import { AiOutlineMail } from "react-icons/ai";
 import { GrLock } from "react-icons/gr";
 
+//NOTES:
+// - Kind of want to remove the right side text
+// - Center Login section on page
+
 const SignUp: React.FC = () => {
   return (
     <Layout>
@@ -16,14 +20,11 @@ const SignUp: React.FC = () => {
                   <div className="rounded-lg bg-white px-6 py-12 shadow-2xl lg:px-20 lg:py-24">
                     <form action="#">
                       <h3 className="font-heading mb-10 text-2xl font-bold dark:text-gray-900">
-                        
-                          <p className="text-3xl">Login</p>
-                          
-                       
+                        <p className="text-3xl">Login</p>
                       </h3>
 
                       {/*EMAIL BOX */}
-                      <div className="mb-3 flex items-center rounded-full border border-gray-200 bg-white pl-6">
+                      <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
                         <span className="inline-block border-r border-gray-50 pr-3">
                           <div className="text-xl text-black">
                             <AiOutlineMail />
@@ -37,7 +38,7 @@ const SignUp: React.FC = () => {
                       </div>
 
                       {/*PASSWORD BOX */}
-                      <div className="mb-3 flex items-center rounded-full border border-gray-200 bg-white pl-6">
+                      <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
                         <span className="inline-block border-r border-gray-50 pr-3">
                           <div className="text-xl">
                             <GrLock />

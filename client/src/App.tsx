@@ -22,7 +22,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/polls" element={<CreateNewPoll />} />
+          <Route path="/createnewpoll" element={<CreateNewPoll />} />
         </Routes>
       </Router>
     </Theme.Provider>

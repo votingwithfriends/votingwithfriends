@@ -8,7 +8,7 @@ const Header: React.FC = () => {
     <header className="mx-auto w-full max-w-screen-xl p-6">
       <div className="flex items-center justify-between">
         <Link to="/">
-          <p className="text-2xl font-black leading-none">
+          <p className="scale-110 text-2xl font-black  leading-none ">
             Voting With <br />
             Friends
           </p>
@@ -17,9 +17,12 @@ const Header: React.FC = () => {
         {/* Render other links here only if user has been signed in */}
         <NavBar />
 
-        <ul className="hidden items-center gap-x-6 lg:flex">
+        <ul className="hidden items-center gap-x-6 lg:flex ">
           <li>
-            <Link className="font-bold" to="/login">
+            <Link
+              className="font-bold dark:text-gray-300 dark:hover:text-gray-100"
+              to="/login"
+            >
               Login
             </Link>
           </li>

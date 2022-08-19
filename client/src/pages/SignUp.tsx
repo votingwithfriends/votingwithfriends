@@ -4,6 +4,10 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiUserCheck } from "react-icons/fi";
 import { GrLock } from "react-icons/gr";
 
+//NOTES:
+//Needs a cool catch phrase
+//Terms and conditions are commented out
+
 const SignUp: React.FC = () => {
   return (
     <Layout>
@@ -46,7 +50,7 @@ const SignUp: React.FC = () => {
                         </span>
                         <input
                           className="w-full rounded-r-full py-4 pr-6 pl-4 text-gray-900 placeholder-gray-900 focus:outline-none"
-                          type="password"
+                          type="text"
                           placeholder="Username"
                         />
                       </div>
@@ -109,13 +113,10 @@ const SignUp: React.FC = () => {
                 <div className="order-first mb-16 w-full px-10 lg:order-last lg:mb-0 lg:w-1/2">
                   <div className="max-w-md -translate-y-24 ">
                     <h2 className="font-heading mt-8 mb-12 text-5xl ">
-                      Welcome to{" "}
+                      Welcome to
                       <span className=" font-bold">
-                        <u className="hover:text-red-500">Voting</u>
-                        <u className="hover:text-green-400">With</u>
-                        <u className="hover:text-indigo-400">Friends</u>
-                        <u className="hover:text-yellow-400">!</u>
-                      </span>{" "}
+                        <p>Voting With Friends!</p>
+                      </span>
                       <b></b>
                       Sign up for an accout today!
                     </h2>

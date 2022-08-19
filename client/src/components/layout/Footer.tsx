@@ -4,7 +4,7 @@ const Footer: React.FC = () => {
     <footer className="w-full bg-slate-100 p-6 dark:bg-deep-darker">
       <div className="mx-auto w-full max-w-screen-xl">
         <article className="text-center md:text-left">
-          <section className="flex flex-col gap-y-4">
+          <section className="flex flex-col gap-y-4 ">
             <p className="text-lg font-black leading-none">
               Voting With <br className="hidden md:block" />
               Friends
