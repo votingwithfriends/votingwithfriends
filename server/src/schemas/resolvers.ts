@@ -45,14 +45,14 @@ export const resolvers = {
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-      // const token = signToken(user);
-      // return { token, user };
+      const token = signToken(user);
+      return { token, user };
     },
     // post new choice
 
-    addChoice: async (_: any, { _id, choice_name }: any) => {
+    addChoice: async (_: any, { poll_id, choice_name }: any, context: any) => {
       return await Poll.findOneAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
 
         { $push: { choices: { choice_name } } },
         { new: true }
@@ -64,19 +64,17 @@ export const resolvers = {
     //   return rankedChoice;
     // },
 
-    updateChoice: async (_: any, { _id, choice_id, choice_name }: any) => {
+    updateChoice: async (_: any, { poll_id, choice_id, choice_name }: any) => {
       // get poll to update choice on
-      const poll = await Poll.findById(_id);
+      const poll = await Poll.findById(poll_id);
       // check that poll exists with given id
       if (!poll) {
         throw new AuthenticationError("No poll found with this ID");
       }
       // create array of current choice ids
-      const choiceIdArray = poll.choices.map(
-        ({ choice_id: choice_id }: any) => ({
-          choice_id: choice_id,
-        })
-      );
+      const choiceIdArray = poll.choices.map(({ _id: choice_id }: any) => ({
+        _id: choice_id,
+      }));
       // check to see if  given choice_id exists in array
       let result = choiceIdArray.some(
         (choice: any) => choice.choice_id.toHexString() === choice_id
@@ -87,16 +85,16 @@ export const resolvers = {
       }
 
       const choice = await Poll.findByIdAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
 
         {
-          $pull: { choices: { choice_id: choice_id } },
+          $pull: { choices: { _id: choice_id } },
         },
         { new: true, runValidators: true }
       );
 
       return await Poll.findOneAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
 
         {
           $push: { choices: { choice_name: choice_name } },
@@ -106,34 +104,35 @@ export const resolvers = {
     },
 
     // delete choice
-    deleteChoice: async (_: any, { _id, choice_id }: any) => {
+    deleteChoice: async (_: any, { poll_id, choice_id }: any) => {
       return await Poll.findByIdAndUpdate(
-        { _id: _id },
-        { $pull: { choices: { choice_id: choice_id } } },
+        { _id: poll_id },
+        { $pull: { choices: { _id: choice_id } } },
         { new: true }
       );
     },
-    addComment: async (_: any, { _id, commentBody, username }: any) => {
+    addComment: async (_: any, { poll_id, comment_body, username }: any) => {
       return await Poll.findOneAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
 
-        { $push: { comments: { commentBody, username } } },
+        { $push: { comments: { comment_body, username } } },
         { new: true }
       );
     },
-    updateComment: async (_: any, { _id, comment_id, commentBody }: any) => {
+    updateComment: async (
+      _: any,
+      { poll_id, comment_id, comment_body }: any
+    ) => {
       // get poll to update choice on
-      const poll = await Poll.findById(_id);
+      const poll = await Poll.findById(poll_id);
       // check that poll exists with given id
       if (!poll) {
         throw new AuthenticationError("No poll found with this ID");
       }
       // create array of current choice ids
-      const commentIdArray = poll.comments.map(
-        ({ comment_id: comment_id }: any) => ({
-          comment_id: comment_id,
-        })
-      );
+      const commentIdArray = poll.comments.map(({ _id: comment_id }: any) => ({
+        _id: comment_id,
+      }));
       // check to see if  given choice_id exists in array
       let result = commentIdArray.some(
         (comment: any) => comment.comment_id.toHexString() === comment_id
@@ -144,27 +143,27 @@ export const resolvers = {
       }
 
       const comment = await Poll.findByIdAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
 
         {
-          $pull: { comments: { comment_id: comment_id } },
+          $pull: { comments: { _id: comment_id } },
         },
         { new: true, runValidators: true }
       );
 
       return await Poll.findOneAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
 
         {
-          $push: { comments: { commentBody: commentBody } },
+          $push: { comments: { comment_body: comment_body } },
         },
         { new: true }
       );
     },
-    deleteComment: async (_: any, { _id, comment_id }: any) => {
+    deleteComment: async (_: any, { poll_id, comment_id }: any) => {
       return await Poll.findByIdAndUpdate(
-        { _id: _id },
-        { $pull: { comments: { comment_id: comment_id } } },
+        { _id: poll_id },
+        { $pull: { comments: { _id: comment_id } } },
         { new: true }
       );
     },
@@ -174,9 +173,9 @@ export const resolvers = {
       return poll;
     },
     // update is_open for single poll
-    updatePoll: async (_: any, { _id, is_open }: any) => {
+    updatePoll: async (_: any, { poll_id, is_open }: any) => {
       const poll = await Poll.findOneAndUpdate(
-        { _id: _id },
+        { _id: poll_id },
         { $set: { is_open } },
         { new: true }
       );
@@ -185,8 +184,8 @@ export const resolvers = {
       }
       return poll;
     },
-    deletePoll: async (_: any, { _id }: any) => {
-      const poll = await Poll.findOneAndDelete({ _id });
+    deletePoll: async (_: any, { poll_id }: any) => {
+      const poll = await Poll.findOneAndDelete({ poll_id });
       if (!poll) {
         throw new AuthenticationError("No poll found with this ID");
       }

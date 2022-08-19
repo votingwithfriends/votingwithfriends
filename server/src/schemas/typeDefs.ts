@@ -51,7 +51,9 @@ export const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): User
+
+    login(email: String!, password: String!): Auth
+
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(_id: ID!, is_open: Boolean): Poll
     deletePoll(_id: ID!): Poll
