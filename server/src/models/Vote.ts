@@ -6,11 +6,11 @@ const voteSchema = new Schema({
     required: true,
   },
   user_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   choice_id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });

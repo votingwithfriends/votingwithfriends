@@ -4,16 +4,22 @@ import { signToken } from "../utils/auth";
 
 export const resolvers = {
   Query: {
+    // get all users
     users: async () => {
       return User.find().select("-__v -password");
     },
+
+    // get a single user
     user: async (_: any, { _id }: any) => {
       return User.findOne({ _id }).select("-__v -password");
     },
+
     // get all polls
     polls: async (_: any, args: any) => {
       return await Poll.find().select("-__v").populate("choices");
     },
+
+    // get a single poll
     poll: async (_: any, { _id }: any) => {
       const poll = await Poll.findOne({ _id })
         .select("-__v")
@@ -26,11 +32,14 @@ export const resolvers = {
   },
 
   Mutation: {
+    // create new user
     addUser: async (_: any, args: any) => {
       const user = await User.create(args);
       const token = signToken(user);
       return { token, user };
     },
+
+    // login
     login: async (
       _: any,
       { email, password }: { email: String; password: string }
@@ -48,22 +57,56 @@ export const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    // post new choice
 
-    addChoice: async (_: any, { poll_id, choice_name }: any, context: any) => {
-      return await Poll.findOneAndUpdate(
+    // create new poll
+    addPoll: async (_: any, args: any) => {
+      try {
+        const poll = await Poll.create(args);
+
+        return poll;
+      } catch (err) {
+        return console.log(err);
+      }
+    },
+
+    // update is_open for single poll
+    updatePoll: async (_: any, { poll_id, is_open }: any) => {
+      const poll = await Poll.findOneAndUpdate(
         { _id: poll_id },
-
-        { $push: { choices: { choice_name } } },
+        { $set: { is_open } },
         { new: true }
       );
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      return poll;
     },
-    // need some help on choice rank
-    // rankedChoice: async (_: any, args: any) => {
-    //   const rankedChoice = await Choices.([]);
-    //   return rankedChoice;
-    // },
 
+    // delete a poll
+    deletePoll: async (_: any, { poll_id }: any) => {
+      const poll = await Poll.findOneAndDelete({ poll_id });
+      if (!poll) {
+        throw new AuthenticationError("No poll found with this ID");
+      }
+      return poll;
+    },
+
+    // post new choice
+    addChoice: async (_: any, { _id, choice_name }: any, context: any) => {
+      try {
+        const choice = await Poll.findByIdAndUpdate(
+          { _id },
+          { $push: { choices: { choice_name } } },
+          { new: true }
+        );
+
+        return choice;
+      } catch (err) {
+        return console.log(err);
+      }
+    },
+
+    // update a choice for a poll
     updateChoice: async (_: any, { poll_id, choice_id, choice_name }: any) => {
       // get poll to update choice on
       const poll = await Poll.findById(poll_id);
@@ -111,6 +154,27 @@ export const resolvers = {
         { new: true }
       );
     },
+
+    // post new vote
+    addVote: async (
+      _: any,
+      { _id, rank_value, user_id, choice_id }: any,
+      context: any
+    ) => {
+      try {
+        const vote = await Poll.findByIdAndUpdate(
+          { _id },
+          { $push: { votes: { rank_value, user_id, choice_id } } },
+          { new: true }
+        );
+
+        return vote;
+      } catch (err) {
+        return console.log(err);
+      }
+    },
+
+    // add a comment to a poll
     addComment: async (_: any, { poll_id, comment_body, username }: any) => {
       return await Poll.findOneAndUpdate(
         { _id: poll_id },
@@ -119,6 +183,8 @@ export const resolvers = {
         { new: true }
       );
     },
+
+    // update a comment on a poll
     updateComment: async (
       _: any,
       { poll_id, comment_id, comment_body }: any
@@ -160,36 +226,14 @@ export const resolvers = {
         { new: true }
       );
     },
+
+    // delete a comment on a poll
     deleteComment: async (_: any, { poll_id, comment_id }: any) => {
       return await Poll.findByIdAndUpdate(
         { _id: poll_id },
         { $pull: { comments: { _id: comment_id } } },
         { new: true }
       );
-    },
-    // create new poll
-    addPoll: async (_: any, args: any) => {
-      const poll = await Poll.create(args);
-      return poll;
-    },
-    // update is_open for single poll
-    updatePoll: async (_: any, { poll_id, is_open }: any) => {
-      const poll = await Poll.findOneAndUpdate(
-        { _id: poll_id },
-        { $set: { is_open } },
-        { new: true }
-      );
-      if (!poll) {
-        throw new AuthenticationError("No poll found with this ID");
-      }
-      return poll;
-    },
-    deletePoll: async (_: any, { poll_id }: any) => {
-      const poll = await Poll.findOneAndDelete({ poll_id });
-      if (!poll) {
-        throw new AuthenticationError("No poll found with this ID");
-      }
-      return poll;
     },
   },
 };

@@ -51,16 +51,19 @@ export const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-
     login(email: String!, password: String!): Auth
-
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(_id: ID!, is_open: Boolean): Poll
     deletePoll(_id: ID!): Poll
     addChoice(_id: ID!, choice_name: String!): Poll
     updateChoice(_id: ID!, choice_id: ID!, choice_name: String!): Poll
     deleteChoice(_id: ID!, choice_id: ID!): Poll
-    addVote(rank_value: Int, user_id: String!, choice_id: String!): Poll
+    addVote(
+      _id: ID!
+      rank_value: Int
+      user_id: String!
+      choice_id: String!
+    ): Poll
     addComment(_id: ID!, comment_body: String, username: String): Poll
     updateComment(_id: ID!, comment_id: ID!, comment_body: String!): Poll
     deleteComment(_id: ID!, comment_id: ID!): Poll
