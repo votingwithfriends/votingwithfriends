@@ -52,9 +52,7 @@ export const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-
     login(email: String!, password: String!): Auth
-
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(poll_id: ID!, is_open: Boolean): Poll
     deletePoll(poll_id: ID!): Poll
@@ -65,5 +63,11 @@ export const typeDefs = gql`
     addComment(poll_id: ID!, comment_body: String): Poll
     updateComment(poll_id: ID!, comment_id: ID!, comment_body: String!): Poll
     deleteComment(poll_id: ID!, comment_id: ID!): Poll
+    addVote(
+      _id: ID!
+      rank_value: Int
+      user_id: String!
+      choice_id: String!
+    ): Poll
   }
 `;

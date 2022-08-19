@@ -17,16 +17,29 @@ export const resolvers = {
 
       throw new AuthenticationError("Not logged in");
     },
+    // get all users
+
     users: async () => {
-      return User.find().select("-__v -password");
+      return User.find().select("-__v -password -token");
     },
+
+    // get a single user
     user: async (_: any, { _id }: any) => {
-      return User.findOne({ _id }).select("-__v -password");
+      const user = User.findOne({ _id }).select("-__v -password");
+
+      if (!user) {
+        throw new AuthenticationError("No user found with this id");
+      }
+
+      return user;
     },
+
     // get all polls
     polls: async (_: any, args: any) => {
       return await Poll.find().select("-__v").populate("choices");
     },
+
+    // get a single poll
     poll: async (_: any, { _id }: any) => {
       const poll = await Poll.findOne({ _id })
         .select("-__v")
@@ -40,11 +53,14 @@ export const resolvers = {
   },
 
   Mutation: {
+    // create new user
     addUser: async (_: any, args: any) => {
       const user = await User.create(args);
       const token = signToken(user);
       return { token, user };
     },
+
+    // login
     login: async (
       _: any,
       { email, password }: { email: String; password: string }
@@ -62,22 +78,23 @@ export const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+
     // post new choice
+    addChoice: async (_: any, { _id, choice_name }: any, context: any) => {
+      try {
+        const choice = await Poll.findByIdAndUpdate(
+          { _id },
+          { $push: { choices: { choice_name } } },
+          { new: true }
+        );
 
-    addChoice: async (_: any, { poll_id, choice_name }: any, context: any) => {
-      return await Poll.findOneAndUpdate(
-        { _id: poll_id },
-
-        { $push: { choices: { choice_name } } },
-        { new: true }
-      );
+        return choice;
+      } catch (err) {
+        return console.log(err);
+      }
     },
-    // need some help on choice rank
-    // rankedChoice: async (_: any, args: any) => {
-    //   const rankedChoice = await Choices.([]);
-    //   return rankedChoice;
-    // },
 
+    // update a choice for a poll
     updateChoice: async (_: any, { poll_id, choice_id, choice_name }: any) => {
       // get poll to update choice on
       const poll = await Poll.findById(poll_id);
@@ -125,25 +142,36 @@ export const resolvers = {
         { new: true }
       );
     },
+
     addComment: async (
       _: any,
       { poll_id, comment_body }: any,
       context: any
     ) => {
       if (context.user) {
-        return await Poll.findOneAndUpdate(
-          { _id: poll_id },
-
-          {
-            $push: {
-              comments: { comment_body, username: context.user.username },
-            },
-          },
+        return await Poll.findOneAndUpdate({ _id: poll_id });
+      }
+    },
+    // post new vote
+    addVote: async (
+      _: any,
+      { _id, rank_value, user_id, choice_id }: any,
+      context: any
+    ) => {
+      try {
+        const vote = await Poll.findByIdAndUpdate(
+          { _id },
+          { $push: { votes: { rank_value, user_id, choice_id } } },
           { new: true }
         );
+
+        return vote;
+      } catch (err) {
+        return console.log(err);
       }
-      throw new AuthenticationError("must be signed in to add comment");
     },
+
+    // update a comment on a poll
     updateComment: async (
       _: any,
       { poll_id, comment_id, comment_body }: any,
