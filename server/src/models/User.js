@@ -1,25 +1,16 @@
-import { Schema, model, Model } from "mongoose";
-import { NextFunction } from "express";
-import { compare, hash } from "bcrypt";
+const { Schema, model, Model } = require("mongoose");
+const { compare, hash } = require("bcrypt");
 
 /* 
 Added the basic fields that define our Users. We will likely need to add
 additional fields, such as friends, friend count, polls, etc.
 */
 
-interface IUser {
-  username: string;
-  email: string;
-  password: string;
-}
+// interface IUserMethods {
+//   isCorrectPassword(password: string): boolean;
+// }
 
-interface IUserMethods {
-  isCorrectPassword(password: string): boolean;
-}
-
-type UserModel = Model<IUser, {}, IUserMethods>;
-
-const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
+const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 8 },
@@ -42,4 +33,6 @@ UserSchema.method(
   }
 );
 
-export const User = model<IUser, UserModel>("User", UserSchema);
+const User = model("User", UserSchema);
+
+module.exports = User;

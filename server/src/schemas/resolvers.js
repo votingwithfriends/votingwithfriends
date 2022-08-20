@@ -1,11 +1,10 @@
-import { User, Poll } from "../models";
-import { AuthenticationError } from "apollo-server-express";
-import { authMiddleware, signToken } from "../utils/auth";
-import choicesSchema from "../models/Choices";
+const { User, Poll } = require("../models");
+const { AuthenticationError } = require("apollo-server-express");
+const { signToken } = require("../utils/auth");
 
-export const resolvers = {
+const resolvers = {
   Query: {
-    me: async (_: any, args: any, context: any) => {
+    me: async (_, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id }).select(
           "-__v -password"
@@ -22,7 +21,7 @@ export const resolvers = {
     },
 
     // get a single user
-    user: async (_: any, { _id }: any) => {
+    user: async (_, { _id }) => {
       const user = User.findOne({ _id }).select("-__v -password");
 
       if (!user) {
@@ -33,12 +32,12 @@ export const resolvers = {
     },
 
     // get all polls
-    polls: async (_: any, args: any) => {
+    polls: async (_, args) => {
       return await Poll.find().select("-__v").populate("choices");
     },
 
     // get a single poll
-    poll: async (_: any, { _id }: any) => {
+    poll: async (_, { _id }) => {
       const poll = await Poll.findOne({ _id })
         .select("-__v")
         .populate("choices");
@@ -52,17 +51,14 @@ export const resolvers = {
 
   Mutation: {
     // create new user
-    addUser: async (_: any, args: any) => {
+    addUser: async (_, args) => {
       const user = await User.create(args);
       const token = signToken(user);
       return { token, user };
     },
 
     // login
-    login: async (
-      _: any,
-      { email, password }: { email: String; password: string }
-    ) => {
+    login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");
@@ -78,7 +74,7 @@ export const resolvers = {
     },
 
     // post new choice
-    addChoice: async (_: any, { poll_id, choice_name }: any, context: any) => {
+    addChoice: async (_, { poll_id, choice_name }, context) => {
       if (context.user) {
         const poll = await Poll.findOne({ poll_id });
         if (!poll) {
@@ -96,11 +92,7 @@ export const resolvers = {
     },
 
     // update a choice for a poll
-    updateChoice: async (
-      _: any,
-      { poll_id, choice_id, choice_name }: any,
-      context: any
-    ) => {
+    updateChoice: async (_, { poll_id, choice_id, choice_name }, context) => {
       // get poll to update choice on
       if (context.user) {
         const poll = await Poll.findOne({ _id: poll_id });
@@ -110,12 +102,12 @@ export const resolvers = {
 
         if (poll.user.valueOf() === context.user._id) {
           // create array of current choice ids
-          const choiceIdArray = poll.choices.map(({ _id: choice_id }: any) => ({
+          const choiceIdArray = poll.choices.map(({ _id: choice_id }) => ({
             _id: choice_id,
           }));
           // check to see if  given choice_id exists in array
           let result = choiceIdArray.some(
-            (choice: any) => choice._id.toHexString() === choice_id
+            (choice) => choice._id.toHexString() === choice_id
           );
           // throw error if choice_id doesn't exist
           if (!result) {
@@ -146,7 +138,7 @@ export const resolvers = {
     },
 
     // delete choice
-    deleteChoice: async (_: any, { poll_id, choice_id }: any, context: any) => {
+    deleteChoice: async (_, { poll_id, choice_id }, context) => {
       if (context.user) {
         const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
@@ -164,11 +156,7 @@ export const resolvers = {
       throw new AuthenticationError("must be logged in to delete comment");
     },
 
-    addComment: async (
-      _: any,
-      { poll_id, comment_body }: any,
-      context: any
-    ) => {
+    addComment: async (_, { poll_id, comment_body }, context) => {
       if (context.user) {
         return await Poll.findOneAndUpdate(
           { _id: poll_id },
@@ -186,11 +174,7 @@ export const resolvers = {
       throw new AuthenticationError("Must be logged in to add comment");
     },
     // post new vote
-    addVote: async (
-      _: any,
-      { _id, rank_value, user_id, choice_id }: any,
-      context: any
-    ) => {
+    addVote: async (_, { _id, rank_value, user_id, choice_id }, context) => {
       try {
         const vote = await Poll.findByIdAndUpdate(
           { _id },
@@ -206,9 +190,9 @@ export const resolvers = {
 
     // update a comment on a poll
     updateComment: async (
-      _: any,
-      { poll_id, comment_id, comment_body }: any,
-      context: any
+      _,
+      { poll_id, comment_id, comment_body },
+      context
     ) => {
       if (context.user) {
         // get poll to update choice on
@@ -218,14 +202,12 @@ export const resolvers = {
           throw new AuthenticationError("No poll found with this ID");
         }
         // create array of current choice ids
-        const commentIdArray = poll.comments.map(
-          ({ _id: comment_id }: any) => ({
-            _id: comment_id,
-          })
-        );
+        const commentIdArray = poll.comments.map(({ _id: comment_id }) => ({
+          _id: comment_id,
+        }));
         // check to see if  given choice_id exists in array
         let result = commentIdArray.some(
-          (comment: any) => comment._id.toHexString() === comment_id
+          (comment) => comment._id.toHexString() === comment_id
         );
         // throw error if choice_id doesn't exist
         if (!result) {
@@ -257,11 +239,7 @@ export const resolvers = {
       }
       throw new AuthenticationError("Must be logged in to update comment");
     },
-    deleteComment: async (
-      _: any,
-      { poll_id, comment_id }: any,
-      context: any
-    ) => {
+    deleteComment: async (_, { poll_id, comment_id }, context) => {
       if (context.user) {
         const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
@@ -279,7 +257,7 @@ export const resolvers = {
       throw new AuthenticationError("must be logged in to delete comment");
     },
     // create new poll
-    addPoll: async (_: any, args: any, context: any) => {
+    addPoll: async (_, args, context) => {
       console.log(context.user.username);
       if (context.user) {
         return await Poll.create({
@@ -290,7 +268,7 @@ export const resolvers = {
       throw new AuthenticationError("Must be logged in to create a poll");
     },
     // update is_open for single poll
-    updatePoll: async (_: any, { poll_id, is_open }: any, context: any) => {
+    updatePoll: async (_, { poll_id, is_open }, context) => {
       if (context.user) {
         const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
@@ -309,7 +287,7 @@ export const resolvers = {
       }
       throw new AuthenticationError("You must be logged into update poll");
     },
-    deletePoll: async (_: any, { poll_id }: any, context: any) => {
+    deletePoll: async (_, { poll_id }, context) => {
       if (context.user) {
         const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
@@ -324,3 +302,5 @@ export const resolvers = {
     },
   },
 };
+
+module.exports = resolvers;

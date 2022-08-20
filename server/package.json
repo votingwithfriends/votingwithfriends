@@ -2,7 +2,7 @@
   "name": "vwf-server",
   "version": "1.0.0",
   "description": "Server for VWF",
-  "main": "src/server.ts",
+  "main": "src/server.js",
   "scripts": {
     "build": "rm -rf build/ && tsc",
     "start": "node build/server.js",
