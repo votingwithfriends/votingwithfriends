@@ -4,13 +4,14 @@ import express from "express";
 import db from "./config/connection";
 import { ApolloServer } from "apollo-server-express";
 import { resolvers, typeDefs } from "./schemas";
-
+import { authMiddleware } from "./utils/auth";
 const PORT: String | Number = process.env.PORT || 3001;
 
 // Create Apollo Server Instance
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware,
 });
 
 const app = express();
