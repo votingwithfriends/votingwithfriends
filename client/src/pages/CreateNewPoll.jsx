@@ -6,7 +6,7 @@ import MotionWrapper from "../components/layout/MotionWrapper";
 // In my opinion the Next Step button is too large.
 //Current Link in the NavBar so we can navigate to page. We can move or place the link later.
 
-const CreateNewPoll: React.FC = () => {
+const CreateNewPoll = () => {
   return (
     <Layout>
       <MotionWrapper>

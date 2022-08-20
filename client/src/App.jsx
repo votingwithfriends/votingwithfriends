@@ -9,7 +9,7 @@ import CreateNewPoll from "./pages/CreateNewPoll";
 
 // TO-DO: Set up routing later
 
-const App: React.FC = () => {
+const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(
     window.matchMedia("(prefers-color-scheme:dark)").matches
   );
