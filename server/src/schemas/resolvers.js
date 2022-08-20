@@ -245,6 +245,7 @@ const resolvers = {
         if (!poll) {
           throw new AuthenticationError("no poll with this id");
         }
+        console.log(poll.user.valueOf(), context.user._id);
         if (poll.user.valueOf() === context.user._id) {
           return await Poll.findByIdAndUpdate(
             { _id: poll_id },
@@ -262,7 +263,7 @@ const resolvers = {
       if (context.user) {
         return await Poll.create({
           ...args,
-          user: { _id: context.user._id, username: context.user.username },
+          user: { _id: context.user._id },
         });
       }
       throw new AuthenticationError("Must be logged in to create a poll");
@@ -274,6 +275,7 @@ const resolvers = {
         if (!poll) {
           throw new AuthenticationError("No poll found with this ID");
         }
+        console.log(poll.user);
         if (poll.user.valueOf() === context.user._id) {
           return await Poll.findOneAndUpdate(
             { _id: poll_id },
