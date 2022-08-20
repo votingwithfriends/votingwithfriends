@@ -8,7 +8,7 @@ import { GrLock } from "react-icons/gr";
 //Needs a cool catch phrase
 //Terms and conditions are commented out
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   return (
     <Layout>
       <MotionWrapper>

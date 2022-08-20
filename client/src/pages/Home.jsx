@@ -6,7 +6,7 @@ import supportImage from "../assets/support.svg";
 import { Link } from "react-router-dom";
 import { IoExitOutline } from "react-icons/io5";
 
-const application = () => {
+const Home = () => {
   return (
     <Layout>
       <>

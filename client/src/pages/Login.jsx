@@ -8,7 +8,7 @@ import { GrLock } from "react-icons/gr";
 // - Kind of want to remove the right side text
 // - Center Login section on page
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   return (
     <Layout>
       <MotionWrapper>
