@@ -1,5 +1,5 @@
 import { IoLogoTwitter, IoLogoGithub } from "react-icons/io5";
-const Footer: React.FC = () => {
+const Footer = () => {
   return (
     <footer className="w-full bg-slate-100 p-6 dark:bg-deep-darker">
       <div className="mx-auto w-full max-w-screen-xl">
