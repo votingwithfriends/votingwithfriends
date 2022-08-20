@@ -59,7 +59,6 @@ export const typeDefs = gql`
     addChoice(poll_id: ID!, choice_name: String!): Poll
     updateChoice(poll_id: ID!, choice_id: ID!, choice_name: String!): Poll
     deleteChoice(poll_id: ID!, choice_id: ID!): Poll
-    addVote(rank_value: Int, user_id: String!, choice_id: String!): Poll
     addComment(poll_id: ID!, comment_body: String): Poll
     updateComment(poll_id: ID!, comment_id: ID!, comment_body: String!): Poll
     deleteComment(poll_id: ID!, comment_id: ID!): Poll

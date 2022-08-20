@@ -1,9 +1,7 @@
 import { User, Poll } from "../models";
 import { AuthenticationError } from "apollo-server-express";
-import { signToken } from "../utils/auth";
-import { argsToArgsConfig } from "graphql/type/definition";
-import { ConnectionStates } from "mongoose";
-import { ValidationContext } from "graphql";
+import { authMiddleware, signToken } from "../utils/auth";
+import choicesSchema from "../models/Choices";
 
 export const resolvers = {
   Query: {
@@ -80,67 +78,90 @@ export const resolvers = {
     },
 
     // post new choice
-    addChoice: async (_: any, { _id, choice_name }: any, context: any) => {
-      try {
-        const choice = await Poll.findByIdAndUpdate(
-          { _id },
-          { $push: { choices: { choice_name } } },
-          { new: true }
-        );
-
-        return choice;
-      } catch (err) {
-        return console.log(err);
+    addChoice: async (_: any, { poll_id, choice_name }: any, context: any) => {
+      if (context.user) {
+        const poll = await Poll.findOne({ poll_id });
+        if (!poll) {
+          throw new AuthenticationError("No poll found with this ID");
+        }
+        if (poll.user.valueOf() === context.user._id) {
+          return await Poll.findByIdAndUpdate(
+            { _id: poll_id },
+            { $push: { choices: { choice_name } } },
+            { new: true }
+          );
+        }
       }
+      throw new AuthenticationError("Only poll createer can create a choice");
     },
 
     // update a choice for a poll
-    updateChoice: async (_: any, { poll_id, choice_id, choice_name }: any) => {
+    updateChoice: async (
+      _: any,
+      { poll_id, choice_id, choice_name }: any,
+      context: any
+    ) => {
       // get poll to update choice on
-      const poll = await Poll.findById(poll_id);
-      // check that poll exists with given id
-      if (!poll) {
-        throw new AuthenticationError("No poll found with this ID");
+      if (context.user) {
+        const poll = await Poll.findOne({ _id: poll_id });
+        if (!poll) {
+          throw new AuthenticationError("No poll found with this ID");
+        }
+
+        if (poll.user.valueOf() === context.user._id) {
+          // create array of current choice ids
+          const choiceIdArray = poll.choices.map(({ _id: choice_id }: any) => ({
+            _id: choice_id,
+          }));
+          // check to see if  given choice_id exists in array
+          let result = choiceIdArray.some(
+            (choice: any) => choice._id.toHexString() === choice_id
+          );
+          // throw error if choice_id doesn't exist
+          if (!result) {
+            throw new AuthenticationError("No choice found with this ID");
+          }
+
+          const choice = await Poll.findByIdAndUpdate(
+            { _id: poll_id },
+
+            {
+              $pull: { choices: { _id: choice_id } },
+            },
+            { new: true, runValidators: true }
+          );
+
+          return await Poll.findOneAndUpdate(
+            { _id: poll_id },
+
+            {
+              $push: { choices: { choice_name: choice_name } },
+            },
+            { new: true }
+          );
+        }
+        throw new AuthenticationError("Only poll creater can update choices");
       }
-      // create array of current choice ids
-      const choiceIdArray = poll.choices.map(({ _id: choice_id }: any) => ({
-        _id: choice_id,
-      }));
-      // check to see if  given choice_id exists in array
-      let result = choiceIdArray.some(
-        (choice: any) => choice.choice_id.toHexString() === choice_id
-      );
-      // throw error if choice_id doesn't exist
-      if (!result) {
-        throw new AuthenticationError("No choice found with this ID");
-      }
-
-      const choice = await Poll.findByIdAndUpdate(
-        { _id: poll_id },
-
-        {
-          $pull: { choices: { _id: choice_id } },
-        },
-        { new: true, runValidators: true }
-      );
-
-      return await Poll.findOneAndUpdate(
-        { _id: poll_id },
-
-        {
-          $push: { choices: { choice_name: choice_name } },
-        },
-        { new: true }
-      );
+      throw new AuthenticationError("must be logged in to update choices");
     },
 
     // delete choice
-    deleteChoice: async (_: any, { poll_id, choice_id }: any) => {
-      return await Poll.findByIdAndUpdate(
-        { _id: poll_id },
-        { $pull: { choices: { _id: choice_id } } },
-        { new: true }
-      );
+    deleteChoice: async (_: any, { poll_id, choice_id }: any, context: any) => {
+      if (context.user) {
+        const poll = await Poll.findOne({ _id: poll_id });
+        if (!poll) {
+          throw new AuthenticationError("no poll with this id");
+        }
+        if (poll.user.valueOf() === context.user._id) {
+          return await Poll.findByIdAndUpdate(
+            { _id: poll_id },
+            { $pull: { choices: { _id: choice_id } } },
+            { new: true }
+          );
+        }
+        throw new AuthenticationError("Only poll creator may delete comments");
+      }
+      throw new AuthenticationError("must be logged in to delete comment");
     },
 
     addComment: async (
@@ -149,8 +170,20 @@ export const resolvers = {
       context: any
     ) => {
       if (context.user) {
-        return await Poll.findOneAndUpdate({ _id: poll_id });
+        return await Poll.findOneAndUpdate(
+          { _id: poll_id },
+          {
+            $push: {
+              comments: {
+                comment_body: comment_body,
+                username: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
       }
+      throw new AuthenticationError("Must be logged in to add comment");
     },
     // post new vote
     addVote: async (
@@ -177,42 +210,52 @@ export const resolvers = {
       { poll_id, comment_id, comment_body }: any,
       context: any
     ) => {
-      // get poll to update choice on
-      const poll = await Poll.findById(poll_id);
-      // check that poll exists with given id
-      if (!poll) {
-        throw new AuthenticationError("No poll found with this ID");
+      if (context.user) {
+        // get poll to update choice on
+        const poll = await Poll.findById(poll_id);
+        // check that poll exists with given id
+        if (!poll) {
+          throw new AuthenticationError("No poll found with this ID");
+        }
+        // create array of current choice ids
+        const commentIdArray = poll.comments.map(
+          ({ _id: comment_id }: any) => ({
+            _id: comment_id,
+          })
+        );
+        // check to see if  given choice_id exists in array
+        let result = commentIdArray.some(
+          (comment: any) => comment._id.toHexString() === comment_id
+        );
+        // throw error if choice_id doesn't exist
+        if (!result) {
+          throw new AuthenticationError("No choice found with this ID");
+        }
+
+        const comment = await Poll.findByIdAndUpdate(
+          { _id: poll_id },
+
+          {
+            $pull: { comments: { _id: comment_id } },
+          },
+          { new: true, runValidators: true }
+        );
+
+        return await Poll.findOneAndUpdate(
+          { _id: poll_id },
+
+          {
+            $push: {
+              comments: {
+                comment_body: comment_body,
+                username: context.user.username,
+              },
+            },
+          },
+          { new: true }
+        );
       }
-      // create array of current choice ids
-      const commentIdArray = poll.comments.map(({ _id: comment_id }: any) => ({
-        _id: comment_id,
-      }));
-      // check to see if  given choice_id exists in array
-      let result = commentIdArray.some(
-        (comment: any) => comment.comment_id.toHexString() === comment_id
-      );
-      // throw error if choice_id doesn't exist
-      if (!result) {
-        throw new AuthenticationError("No choice found with this ID");
-      }
-
-      const comment = await Poll.findByIdAndUpdate(
-        { _id: poll_id },
-
-        {
-          $pull: { comments: { _id: comment_id } },
-        },
-        { new: true, runValidators: true }
-      );
-
-      return await Poll.findOneAndUpdate(
-        { _id: poll_id },
-
-        {
-          $push: { comments: { comment_body: comment_body } },
-        },
-        { new: true }
-      );
+      throw new AuthenticationError("Must be logged in to update comment");
     },
     deleteComment: async (
       _: any,
@@ -220,35 +263,36 @@ export const resolvers = {
       context: any
     ) => {
       if (context.user) {
-        const poll = await Poll.findOne({ poll_id });
+        const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
-          throw new AuthenticationError(
-            "You must be logged in to delete this comment"
+          throw new AuthenticationError("no poll with this id");
+        }
+        if (poll.user.valueOf() === context.user._id) {
+          return await Poll.findByIdAndUpdate(
+            { _id: poll_id },
+            { $pull: { comments: { _id: comment_id } } },
+            { new: true }
           );
         }
-
-        return await Poll.findByIdAndUpdate(
-          { _id: poll_id },
-          { $pull: { comments: { _id: comment_id } } },
-          { new: true }
-        );
+        throw new AuthenticationError("Only poll creator may delete comments");
       }
+      throw new AuthenticationError("must be logged in to delete comment");
     },
     // create new poll
     addPoll: async (_: any, args: any, context: any) => {
+      console.log(context.user.username);
       if (context.user) {
-        const poll = await Poll.create({
+        return await Poll.create({
           ...args,
           user: { _id: context.user._id, username: context.user.username },
         });
-        return poll;
       }
       throw new AuthenticationError("Must be logged in to create a poll");
     },
     // update is_open for single poll
     updatePoll: async (_: any, { poll_id, is_open }: any, context: any) => {
       if (context.user) {
-        const poll = await Poll.findOne({ poll_id });
+        const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
           throw new AuthenticationError("No poll found with this ID");
         }
@@ -267,12 +311,12 @@ export const resolvers = {
     },
     deletePoll: async (_: any, { poll_id }: any, context: any) => {
       if (context.user) {
-        const poll = await Poll.findOne({ poll_id });
+        const poll = await Poll.findOne({ _id: poll_id });
         if (!poll) {
           throw new AuthenticationError("No poll found with this ID");
         }
         if (poll.user.valueOf() === context.user._id) {
-          return await Poll.findOneAndDelete({ poll_id });
+          return await Poll.findOneAndDelete({ _id: poll_id });
         }
         throw new AuthenticationError("Not authorized to delete this poll");
       }
