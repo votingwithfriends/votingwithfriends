@@ -3,7 +3,7 @@ import MotionWrapper from "../components/layout/MotionWrapper";
 
 import React, { useState } from "react";
 
-const DashBoard: React.FC = () => {
+const DashBoard= () => {
   return (
     <Layout>
       <MotionWrapper>

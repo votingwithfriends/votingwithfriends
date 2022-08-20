@@ -16,10 +16,10 @@ const SignUp: React.FC = () => {
                   <div className="rounded-lg bg-white px-6 py-12 shadow-2xl lg:px-20 lg:py-24">
                     <form action="#">
                       <h3 className="font-heading mb-10 text-2xl font-bold dark:text-gray-900">
-                        <u>
+                        
                           <p className="text-3xl">Login</p>
-                          To your Account
-                        </u>
+                          
+                       
                       </h3>
 
                       {/*EMAIL BOX */}

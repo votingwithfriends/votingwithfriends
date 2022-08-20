@@ -5,10 +5,11 @@ import { Theme } from "./context/Theme";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import DashBoard from "./pages/Dashboard";
+import CreateNewPoll from "./pages/CreateNewPoll";
 
 // TO-DO: Set up routing later
 
-const App: React.FC = () => {
+const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(
     window.matchMedia("(prefers-color-scheme:dark)").matches
   );
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/polls" element={<CreateNewPoll />} />
         </Routes>
       </Router>
     </Theme.Provider>

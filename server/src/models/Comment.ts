@@ -1,7 +1,7 @@
 import { Schema, Types } from "mongoose";
 
 const commentSchema = new Schema({
-  commentBody: {
+  comment_body: {
     type: String,
     required: true,
     maxlength: 280,
@@ -16,11 +16,6 @@ const commentSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  },
-  comment_id: {
-    type: Schema.Types.ObjectId,
-    unique: false,
-    default: () => new Types.ObjectId(),
   },
 });
 

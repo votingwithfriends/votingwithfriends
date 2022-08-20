@@ -5,17 +5,12 @@ export const typeDefs = gql`
     _id: ID
     username: String
     email: String
+    token: String
   }
 
   type Auth {
     token: ID!
     user: User
-  }
-
-  type Choices {
-    _id: ID
-    choice_name: String
-    poll: Poll
   }
 
   type Poll {
@@ -24,28 +19,27 @@ export const typeDefs = gql`
     is_open: Boolean
     user: User
     choices: [Choices]
+    votes: [Vote]
     comments: [Comment]
   }
 
   type Choices {
     _id: ID
     choice_name: String
-    choice_id: ID!
   }
 
   type Comment {
     _id: ID
-    commentBody: String
+    comment_body: String
     username: String
     createdAt: String
-    comment_id: ID
   }
 
   type Vote {
     _id: ID
-    poll: Poll
-    choice: Choices
     rank_value: Int
+    user_id: String
+    choice_id: String
   }
 
   type Query {
@@ -53,22 +47,25 @@ export const typeDefs = gql`
     user(_id: ID!): User
     polls: [Poll]
     poll(_id: ID!): Poll
-    votes: [Vote]
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
-    addChoice(_id: ID!, choice_name: String!): Poll
-    rankedChoice(user_id: ID!): Choices
-    updateChoice(_id: ID!, choice_id: ID!, choice_name: String!): Poll
-    deleteChoice(_id: ID!, choice_id: ID!): Poll
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(_id: ID!, is_open: Boolean): Poll
     deletePoll(_id: ID!): Poll
-    addComment(_id: ID!, commentBody: String, username: String): Poll
-    updateComment(_id: ID!, comment_id: ID!, commentBody: String!): Poll
+    addChoice(_id: ID!, choice_name: String!): Poll
+    updateChoice(_id: ID!, choice_id: ID!, choice_name: String!): Poll
+    deleteChoice(_id: ID!, choice_id: ID!): Poll
+    addVote(
+      _id: ID!
+      rank_value: Int
+      user_id: String!
+      choice_id: String!
+    ): Poll
+    addComment(_id: ID!, comment_body: String, username: String): Poll
+    updateComment(_id: ID!, comment_id: ID!, comment_body: String!): Poll
     deleteComment(_id: ID!, comment_id: ID!): Poll
-    addVote(poll: String!, choice: String!, rank_value: Int!): Vote
   }
 `;
