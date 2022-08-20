@@ -6,6 +6,9 @@ const { ApolloServer } = require("apollo-server-express");
 const { resolvers, typeDefs } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const PORT = process.env.PORT || 3001;
+const dotenv = require('dotenv')
+
+dotenv.config();
 
 // Create Apollo Server Instance
 const server = new ApolloServer({
