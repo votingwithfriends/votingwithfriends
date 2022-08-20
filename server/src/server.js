@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 3001;
 const dotenv = require("dotenv");
 
 dotenv.config();
-console.log(process.env.TOKEN_SECRET);
 
 // Create Apollo Server Instance
 const server = new ApolloServer({
