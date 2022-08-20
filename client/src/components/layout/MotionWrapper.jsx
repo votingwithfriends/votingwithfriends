@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 
-
-
 const MotionWrapper = ({ children }) => {
   const variants = {
     show: {
