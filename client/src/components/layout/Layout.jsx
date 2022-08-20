@@ -3,11 +3,7 @@ import { Theme } from "../../context/Theme";
 import Header from "./Header";
 import Footer from "./Footer";
 
-interface Props {
-  children: JSX.Element;
-}
-
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout = ({ children }) => {
   const { isDarkTheme } = useContext(Theme);
 
   useEffect(() => {

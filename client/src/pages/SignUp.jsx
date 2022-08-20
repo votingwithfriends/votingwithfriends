@@ -4,7 +4,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiUserCheck } from "react-icons/fi";
 import { GrLock } from "react-icons/gr";
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   return (
     <Layout>
       <MotionWrapper>
