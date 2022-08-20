@@ -3,17 +3,14 @@ import MotionWrapper from "../components/layout/MotionWrapper";
 
 import React, { useState } from "react";
 
-const CreateNewPoll: React.FC = () => {
+const DashBoard= () => {
   return (
     <Layout>
       <MotionWrapper>
-
-        <h1>CreateNewPoll</h1>
-     
+        <h1>DASHBOARD!</h1>
       </MotionWrapper>
-
     </Layout>
   );
 };
 
-export default CreateNewPoll;
+export default DashBoard;
