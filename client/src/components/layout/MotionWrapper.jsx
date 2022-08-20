@@ -1,11 +1,7 @@
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
-interface Props {
-  children: JSX.Element;
-}
-
-const MotionWrapper: React.FC<Props> = ({ children }) => {
-  const variants: Variants = {
+const MotionWrapper = ({ children }) => {
+  const variants = {
     show: {
       opacity: 1,
       x: 0,

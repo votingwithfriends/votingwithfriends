@@ -3,7 +3,7 @@ import { IoMenu } from "react-icons/io5";
 import ThemeToggle from "../ThemeToggle";
 import NavBar from "../NavBar";
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
     <header className="mx-auto w-full max-w-screen-xl p-6">
       <nav className="flex items-center justify-between">

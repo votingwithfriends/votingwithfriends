@@ -2,11 +2,7 @@ import { useContext } from "react";
 import { Theme } from "../context/Theme";
 import { IoSunny, IoMoon } from "react-icons/io5";
 
-interface Props {
-  className?: String;
-}
-
-const ThemeToggle: React.FC<Props> = ({ className }) => {
+const ThemeToggle = ({ className }) => {
   const { isDarkTheme, setIsDarkTheme } = useContext(Theme);
 
   return (

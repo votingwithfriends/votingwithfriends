@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import MotionWrapper from "../components/layout/MotionWrapper";
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
   return (
     <Layout>
       <MotionWrapper>
@@ -14,10 +14,7 @@ const SignUp: React.FC = () => {
                   <div className="rounded-lg bg-white px-6 py-12 shadow-2xl lg:px-20 lg:py-24">
                     <form action="#">
                       <h3 className="font-heading mb-10 text-2xl font-bold dark:text-gray-900">
-                        
-                          <p className="text-3xl">Login</p>
-                          
-                       
+                        <p className="text-3xl">Login</p>
                       </h3>
 
                       {/*EMAIL BOX */}
