@@ -1,11 +1,14 @@
 /** Primary entry point to the VotingWithFriends backend */
 
-import express from "express";
-import db from "./config/connection";
-import { ApolloServer } from "apollo-server-express";
-import { resolvers, typeDefs } from "./schemas";
-import { authMiddleware } from "./utils/auth";
-const PORT: String | Number = process.env.PORT || 3001;
+const express = require("express");
+const db = require("./config/connection");
+const { ApolloServer } = require("apollo-server-express");
+const { resolvers, typeDefs } = require("./schemas");
+const { authMiddleware } = require("./utils/auth");
+const PORT = process.env.PORT || 3001;
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 // Create Apollo Server Instance
 const server = new ApolloServer({
@@ -20,7 +23,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const startApolloServer = async (typeDefs: any, resolvers: any) => {
+const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
   // Launch server once connection to MongoDB has been established

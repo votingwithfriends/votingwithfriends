@@ -1,4 +1,4 @@
-import { Schema, Types } from "mongoose";
+const { Schema, Types } = require("mongoose");
 
 const choicesSchema = new Schema({
   choice_name: {
@@ -6,4 +6,4 @@ const choicesSchema = new Schema({
   },
 });
 
-export default choicesSchema;
+module.exports = choicesSchema;

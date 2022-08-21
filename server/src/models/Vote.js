@@ -1,4 +1,4 @@
-import { Schema, model, Model } from "mongoose";
+const { Schema, model, Model } = require("mongoose");
 
 const voteSchema = new Schema({
   rank_value: {
@@ -15,4 +15,4 @@ const voteSchema = new Schema({
   },
 });
 
-export default voteSchema;
+module.exports = voteSchema;
