@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
   }, [isDarkTheme]);
 
   return (
-    <div className="h-full w-full overflow-x-hidden bg-slate-50 text-deep-dark transition-colors duration-500 ease-out dark:bg-deep-dark dark:text-slate-100">
+    <div className="h-full w-full overflow-x-hidden bg-slate-50 text-zinc-900 transition-colors duration-500 ease-out dark:bg-zinc-900 dark:text-slate-100">
       <div className="grid h-full w-full grid-rows-[auto_1fr_auto]">
         <Header />
         <main>{children}</main>

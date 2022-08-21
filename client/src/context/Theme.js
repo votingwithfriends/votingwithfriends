@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from "react";
+import { createContext } from "react";
 
 export const Theme = createContext({
   isDarkTheme: true,

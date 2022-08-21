@@ -3,6 +3,7 @@ import MotionWrapper from "../components/layout/MotionWrapper";
 import heroImage from "../assets/graph_hero.svg";
 import questionImage from "../assets/question.svg";
 import supportImage from "../assets/support.svg";
+import teamImage from "../assets/team.svg";
 import { Link } from "react-router-dom";
 import { IoExitOutline } from "react-icons/io5";
 
@@ -10,7 +11,7 @@ const Home = () => {
   return (
     <Layout>
       <>
-        <article className="w-full bg-indigo-100 dark:bg-deep-darker">
+        <article className="w-full bg-blue-100 dark:bg-zinc-800">
           <MotionWrapper>
             <div className="my-20 grid grid-rows-[1fr_auto] items-center gap-y-6 md:grid-cols-2 lg:gap-x-6">
               <div>
@@ -32,7 +33,7 @@ const Home = () => {
                     below!
                   </p>
                   <Link
-                    className="mx-auto mb-4 inline-block w-1/2 rounded bg-indigo-500 py-4 text-center text-white md:mx-0 md:mr-auto lg:mb-0"
+                    className="mx-auto mb-4 inline-block w-1/2 rounded bg-blue-500 py-4 text-center text-white dark:bg-cyan-600 md:mx-0 md:mr-auto lg:mb-0"
                     to="/login"
                   >
                     Get Started
@@ -57,7 +58,7 @@ const Home = () => {
                     alt="man asking a question"
                   />
                   <section>
-                    <h2 className="mb-8 text-3xl font-bold">
+                    <h2 className="mb-8 text-3xl font-bold lg:text-5xl">
                       What is Ranked Choice?
                     </h2>
 
@@ -73,7 +74,11 @@ const Home = () => {
                       choice, if they had a second choice. This continues until
                       a candidate reaches a majority and wins the poll.
                     </p>
-                    <a href="/" className="mt-6 inline-block underline">
+                    <a
+                      href="https://www.rcvresources.org/"
+                      target="_blank"
+                      className="mt-6 inline-block text-blue-600 underline dark:text-cyan-500"
+                    >
                       More about ranked choice voting
                       <IoExitOutline className="ml-2 inline" />
                     </a>
@@ -83,7 +88,7 @@ const Home = () => {
               <section>
                 <article className="grid grid-cols-1 items-center gap-y-10 md:grid-cols-2 md:gap-x-10">
                   <section>
-                    <h2 className="mb-8 text-3xl font-bold">
+                    <h2 className="mb-8 text-3xl font-bold lg:text-5xl">
                       A Social Ranking Platform
                     </h2>
 
@@ -91,20 +96,59 @@ const Home = () => {
                       <strong>
                         <em>Voting With Friends</em>
                       </strong>{" "}
-                      aims to be the first community-driven ranked choice
-                      platform. Create polls and easily invite your friends to
-                      participate. Browse polls created by your friends. Comment
-                      on poll results, and more!
+                      aims to be a community-driven voting platform. Create
+                      polls and easily invite your friends to participate.
+                      Browse polls created by your friends. Comment on poll
+                      results, and more!
+                    </p>
+                    <p className="mt-8 leading-loose">
+                      Need to decide on a place to eat with your friends? Don't
+                      argue about it, just create a poll and have your friends
+                      participate!
                     </p>
                   </section>
                   <img
                     className="w-full"
                     src={supportImage}
-                    alt="man asking a question"
+                    alt="woman waving in greeting"
                   />
                 </article>
               </section>
             </article>
+          </MotionWrapper>
+        </article>
+
+        <article className="w-full bg-blue-100 dark:bg-zinc-800">
+          <MotionWrapper>
+            <section className="grid-col-1 my-20 grid items-center gap-y-10 md:grid-cols-2 md:gap-x-10">
+              <img
+                className="w-full"
+                src={teamImage}
+                alt="people working as a team"
+              />
+              <article>
+                <h2 className="mb-8 text-3xl font-bold lg:text-5xl">
+                  Open Source
+                </h2>
+                <p className="leading-loose">
+                  This is a fully open source project. Developers are welcome to
+                  contribute to{" "}
+                  <strong>
+                    <em>Voting With Friends</em>
+                  </strong>{" "}
+                  . Help us grow into the largest social voting community on the
+                  web! Visit our{" "}
+                  <a
+                    href="https://github.com/votingwithfriends/votingwithfriends"
+                    target="_blank"
+                    className="text-blue-500 underline dark:text-cyan-500"
+                  >
+                    GitHub
+                  </a>{" "}
+                  organization page to view open issues and projects.
+                </p>
+              </article>
+            </section>
           </MotionWrapper>
         </article>
       </>
