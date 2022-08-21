@@ -28,7 +28,8 @@ const resolvers = {
     user: async (_, { _id }) => {
       const user = User.findOne({ _id })
         .select("-__v -password")
-        .populate("polls");
+        .populate("polls")
+        .populate("friends");
 
       if (!user) {
         throw new AuthenticationError("No user found with this id");
