@@ -7,12 +7,12 @@ import { Link } from "react-router-dom";
 
 const SideBar = () => {
   return (
-    <div className="sidebar fixed top-14 left-0 z-10 flex h-full w-14 flex-col border-none bg-blue-900 text-white transition-all duration-300 hover:w-64 dark:bg-transparent md:w-64">
+    <div className="sidebar bg-trasnparent fixed top-24 left-0 z-10 flex h-full w-14 flex-col text-gray-800 transition-all duration-300 hover:w-64 dark:bg-transparent dark:text-slate-100 md:w-64">
       <div className="flex flex-grow flex-col justify-between overflow-y-auto overflow-x-hidden">
-        <ul className="flex flex-col space-y-1 py-4">
+        <ul className="flex flex-col space-y-1 bg-clip-border py-4">
           <li className="hidden px-5 md:block">
             <div className="flex h-8 flex-row items-center">
-              <div className="text-sm font-light uppercase tracking-wide text-gray-400">
+              <div className="text-sm font-light uppercase tracking-wide text-gray-500">
                 Main
               </div>
             </div>

@@ -8,7 +8,7 @@ const NavBar = () => {
           className="hidden w-full md:block md:w-auto"
           id="navbar-multi-level"
         >
-          <ul className="mt-4 flex flex-col rounded-lg p-4 md:mt-0 md:flex-row md:space-x-8 md:text-sm ">
+          <ul className="mt-4 flex flex-col rounded-lg p-4 md:mt-0 md:flex-row md:space-x-8">
             <li>
               <Link
                 to="/dashboard"

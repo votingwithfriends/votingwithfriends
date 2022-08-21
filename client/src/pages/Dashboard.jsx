@@ -11,8 +11,8 @@ const Dashboard = () => {
     <Layout>
       <MotionWrapper>
         <SideBar />
-        <div className="{ 'dark': isDark }">
-          <div className="flex min-h-screen flex-auto flex-shrink-0 flex-col bg-white  text-black  dark:bg-gray-700 dark:text-white">
+        <div className="">
+          <div className="flex min-h-screen flex-col content-center rounded-3xl  text-black dark:bg-transparent dark:text-white">
             {/* ./Header */}
 
             <div className="ml-14 mt-14 mb-10 h-full md:ml-64">
@@ -634,90 +634,6 @@ const Dashboard = () => {
                         </tr>
                       </tbody>
                     </table>
-                  </div>
-                  <div className="grid border-t bg-gray-50 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:grid-cols-9">
-                    <span className="col-span-3 flex items-center">
-                      {" "}
-                      Showing 21-30 of 100{" "}
-                    </span>
-                    <span className="col-span-2" />
-
-                    {/* Pagination */}
-                    <span className="col-span-4 mt-2 flex sm:mt-auto sm:justify-end">
-                      <nav aria-label="Table navigation">
-                        <ul className="inline-flex items-center">
-                          <li>
-                            <button
-                              className="focus:shadow-outline-purple rounded-md rounded-l-lg px-3 py-1 focus:outline-none"
-                              aria-label="Previous"
-                            >
-                              <svg
-                                aria-hidden="true"
-                                className="h-4 w-4 fill-current"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                  fillRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-                          </li>
-                          <li>
-                            <button className="focus:shadow-outline-purple rounded-md px-3 py-1 focus:outline-none">
-                              1
-                            </button>
-                          </li>
-                          <li>
-                            <button className="focus:shadow-outline-purple rounded-md px-3 py-1 focus:outline-none">
-                              2
-                            </button>
-                          </li>
-                          <li>
-                            <button className="focus:shadow-outline-purple rounded-md border border-r-0 border-blue-600 bg-blue-600 px-3 py-1 text-white transition-colors duration-150 focus:outline-none dark:border-gray-100 dark:bg-gray-100 dark:text-gray-800">
-                              3
-                            </button>
-                          </li>
-                          <li>
-                            <button className="focus:shadow-outline-purple rounded-md px-3 py-1 focus:outline-none">
-                              4
-                            </button>
-                          </li>
-                          <li>
-                            <span className="px-3 py-1">...</span>
-                          </li>
-                          <li>
-                            <button className="focus:shadow-outline-purple rounded-md px-3 py-1 focus:outline-none">
-                              8
-                            </button>
-                          </li>
-                          <li>
-                            <button className="focus:shadow-outline-purple rounded-md px-3 py-1 focus:outline-none">
-                              9
-                            </button>
-                          </li>
-                          <li>
-                            <button
-                              className="focus:shadow-outline-purple rounded-md rounded-r-lg px-3 py-1 focus:outline-none"
-                              aria-label="Next"
-                            >
-                              <svg
-                                className="h-4 w-4 fill-current"
-                                aria-hidden="true"
-                                viewBox="0 0 20 20"
-                              >
-                                <path
-                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                  clipRule="evenodd"
-                                  fillRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-                          </li>
-                        </ul>
-                      </nav>
-                    </span>
                   </div>
                 </div>
               </div>
