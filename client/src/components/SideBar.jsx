@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 //TO DO:
 //Side bar needs to scroll with the page
 //Set link names/Set routes
-//Voting with friends Link
+//I dont like how it renders on the page. It renders a bit lwoer, then after a half second, pops up into position.
 
 const SideBar = () => {
   return (
-    <div className="sidebar bg-trasnparent fixed top-24 left-0 z-10 flex h-full w-14 flex-col text-gray-800 transition-all duration-300 hover:w-64 dark:bg-transparent dark:text-slate-100 md:w-64">
+    <div className="bg-trasnparent fixed top-24 left-0 z-10 flex h-full w-14 flex-col text-gray-800  hover:w-64 dark:bg-transparent dark:text-slate-100 md:w-64">
       <div className="flex flex-grow flex-col justify-between overflow-y-auto overflow-x-hidden">
         <ul className="flex flex-col space-y-1 bg-clip-border py-4">
           <li className="hidden px-5 md:block">
