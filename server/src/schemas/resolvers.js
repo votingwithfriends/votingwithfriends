@@ -33,7 +33,10 @@ const resolvers = {
 
     // get all polls
     polls: async (_, args) => {
-      return await Poll.find().select("-__v").populate("choices");
+      return await Poll.find()
+        .select("-__v")
+        .populate("choices")
+        .populate("user");
     },
 
     // get a single poll
@@ -245,7 +248,7 @@ const resolvers = {
         if (!poll) {
           throw new AuthenticationError("no poll with this id");
         }
-        console.log(poll.user.valueOf(), context.user._id);
+        // console.log(poll.user.valueOf(), context.user._id);
         if (poll.user.valueOf() === context.user._id) {
           return await Poll.findByIdAndUpdate(
             { _id: poll_id },
