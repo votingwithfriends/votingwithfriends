@@ -6,9 +6,10 @@ const resolvers = {
   Query: {
     me: async (_, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select(
-          "-__v -password"
-        );
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("friends")
+          .populate("polls");
         return userData;
       }
 
