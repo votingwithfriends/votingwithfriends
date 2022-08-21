@@ -85,22 +85,6 @@ const SignUp = () => {
                         />
                       </div>
 
-                      {/*OPTIONAL */}
-                      {/*CHECKBOX ON SIGN UP OPTIONAL WILL REQ. TERMS, DATA POLICY, AND COOKIES PAGES */}
-                      {/*<div className="mb-10 inline-flex">
-                        <input className="mr-4" type="checkbox" />
-                        <p className="-mt-2 text-sm text-gray-500">
-                          By singning up, you agree to our{" "}
-                          <a className="text-gray-900" href="#">
-                            Terms, Data Policy
-                          </a>
-                          and{" "}
-                          <a className="text-gray-900" href="#">
-                            Cookies.
-                          </a>
-                        </p>
-                      </div>*/}
-
                       {/*GET STARTED BUTTON */}
                       <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-700">
                         Get started

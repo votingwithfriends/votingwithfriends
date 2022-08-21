@@ -1,18 +1,16 @@
 import MotionWrapper from "../components/layout/MotionWrapper";
 import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
+import Dashboard from "../components/Dashboard";
 
-const DashBoard= () => {
+const Dash = () => {
   return (
     <Layout>
       <MotionWrapper>
-        <h1>
-          Im a Dashboard. This thing is giving me problems. No other items set
-          to render atm.
-        </h1>
+        <Dashboard />
       </MotionWrapper>
     </Layout>
   );
 };
 
-export default DashBoard;
+export default Dash;
