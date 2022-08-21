@@ -10,11 +10,30 @@ additional fields, such as friends, friend count, polls, etc.
 //   isCorrectPassword(password: string): boolean;
 // }
 
-const UserSchema = new Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true, minlength: 8 },
-});
+const UserSchema = new Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true, minlength: 8 },
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    polls: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Poll",
+      },
+    ],
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 
 // Hash the password when User is created or modified
 UserSchema.pre("save", async function (next) {
@@ -32,6 +51,10 @@ UserSchema.method(
     return compare(password, this.password);
   }
 );
+
+UserSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
+});
 
 const User = model("User", UserSchema);
 

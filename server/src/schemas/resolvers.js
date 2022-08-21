@@ -6,9 +6,10 @@ const resolvers = {
   Query: {
     me: async (_, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select(
-          "-__v -password"
-        );
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("friends")
+          .populate("polls");
         return userData;
       }
 
@@ -17,12 +18,18 @@ const resolvers = {
     // get all users
 
     users: async () => {
-      return User.find().select("-__v -password -token");
+      return User.find()
+        .select("-__v -password -token")
+        .populate("friends")
+        .populate("polls");
     },
 
     // get a single user
     user: async (_, { _id }) => {
-      const user = User.findOne({ _id }).select("-__v -password");
+      const user = User.findOne({ _id })
+        .select("-__v -password")
+        .populate("polls")
+        .populate("friends");
 
       if (!user) {
         throw new AuthenticationError("No user found with this id");
@@ -33,7 +40,10 @@ const resolvers = {
 
     // get all polls
     polls: async (_, args) => {
-      return await Poll.find().select("-__v").populate("choices");
+      return await Poll.find()
+        .select("-__v")
+        .populate("choices")
+        .populate("user");
     },
 
     // get a single poll
@@ -71,6 +81,17 @@ const resolvers = {
       }
       const token = signToken(user);
       return { token, user };
+    },
+
+    // add Friend to friends
+    addFriend: async (_, { friend_id }, context) => {
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: friend_id } },
+          { new: true }
+        ).populate("friends");
+      }
     },
 
     // post new choice
@@ -245,7 +266,7 @@ const resolvers = {
         if (!poll) {
           throw new AuthenticationError("no poll with this id");
         }
-        console.log(poll.user.valueOf(), context.user._id);
+        // console.log(poll.user.valueOf(), context.user._id);
         if (poll.user.valueOf() === context.user._id) {
           return await Poll.findByIdAndUpdate(
             { _id: poll_id },
@@ -259,12 +280,18 @@ const resolvers = {
     },
     // create new poll
     addPoll: async (_, args, context) => {
-      console.log(context.user.username);
       if (context.user) {
-        return await Poll.create({
+        const poll = await Poll.create({
           ...args,
           user: { _id: context.user._id },
         });
+        console.log(poll._id);
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { polls: poll._id } },
+          { new: true }
+        );
+        return poll;
       }
       throw new AuthenticationError("Must be logged in to create a poll");
     },

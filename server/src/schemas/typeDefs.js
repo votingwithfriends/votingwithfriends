@@ -5,6 +5,9 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
+    polls: [Poll]
+    friends: [User]
+    friendCount: Int
     token: String
   }
 
@@ -52,6 +55,7 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
+    addFriend(friend_id: ID!): User
     login(email: String!, password: String!): Auth
     addPoll(title: String!, is_open: Boolean): Poll
     updatePoll(poll_id: ID!, is_open: Boolean): Poll
