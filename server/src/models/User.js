@@ -21,6 +21,12 @@ const UserSchema = new Schema(
         ref: "User",
       },
     ],
+    polls: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Poll",
+      },
+    ],
   },
   {
     toJSON: {

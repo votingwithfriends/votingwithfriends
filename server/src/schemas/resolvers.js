@@ -17,12 +17,17 @@ const resolvers = {
     // get all users
 
     users: async () => {
-      return User.find().select("-__v -password -token");
+      return User.find()
+        .select("-__v -password -token")
+        .populate("friends")
+        .populate("polls");
     },
 
     // get a single user
     user: async (_, { _id }) => {
-      const user = User.findOne({ _id }).select("-__v -password");
+      const user = User.findOne({ _id })
+        .select("-__v -password")
+        .populate("polls");
 
       if (!user) {
         throw new AuthenticationError("No user found with this id");
@@ -273,12 +278,18 @@ const resolvers = {
     },
     // create new poll
     addPoll: async (_, args, context) => {
-      console.log(context.user.username);
       if (context.user) {
-        return await Poll.create({
+        const poll = await Poll.create({
           ...args,
           user: { _id: context.user._id },
         });
+        console.log(poll._id);
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { polls: poll._id } },
+          { new: true }
+        );
+        return poll;
       }
       throw new AuthenticationError("Must be logged in to create a poll");
     },
