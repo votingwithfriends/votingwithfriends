@@ -76,6 +76,17 @@ const resolvers = {
       return { token, user };
     },
 
+    // add Friend to friends
+    addFriend: async (_, { friend_id }, context) => {
+      if (context.user) {
+        return await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: friend_id } },
+          { new: true }
+        ).populate("friends");
+      }
+    },
+
     // post new choice
     addChoice: async (_, { poll_id, choice_name }, context) => {
       if (context.user) {
