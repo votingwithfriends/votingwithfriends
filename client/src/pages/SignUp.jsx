@@ -86,7 +86,7 @@ const SignUp = () => {
                       </div>
 
                       {/*GET STARTED BUTTON */}
-                      <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-700">
+                      <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
                         Get started
                       </button>
                     </form>

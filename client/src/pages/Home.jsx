@@ -33,7 +33,7 @@ const Home = () => {
                     below!
                   </p>
                   <Link
-                    className="mx-auto mb-4 inline-block w-1/2 rounded bg-blue-500 py-4 text-center text-white dark:bg-cyan-600 md:mx-0 md:mr-auto lg:mb-0"
+                    className="mx-auto mb-4 inline-block w-1/2 rounded bg-blue-500 py-4 text-center text-white dark:bg-cyan-600 dark:hover:bg-cyan-500 md:mx-0 md:mr-auto lg:mb-0"
                     to="/login"
                   >
                     Get Started

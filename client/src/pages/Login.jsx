@@ -52,7 +52,7 @@ const SignUp = () => {
                       </div>
 
                       {/*GET STARTED BUTTON */}
-                      <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-700">
+                      <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
                         Login
                       </button>
                     </form>
@@ -63,12 +63,9 @@ const SignUp = () => {
                 <div className="order-first mb-16 w-full px-10 lg:order-last lg:mb-0 lg:w-1/2">
                   <div className="max-w-md -translate-y-24 ">
                     <h2 className="font-heading mt-8 mb-12 text-5xl ">
-                      Welcome to{" "}
+                      Welcome to <br></br>
                       <span className=" font-bold">
-                        <u className="hover:text-red-500">Voting</u>
-                        <u className="hover:text-green-400">With</u>
-                        <u className="hover:text-indigo-400">Friends</u>
-                        <u className="hover:text-yellow-400">!</u>
+                        Voting With Friends!
                       </span>{" "}
                       <b></b>
                       Sign in to your account! If you don't have an account
@@ -76,7 +73,7 @@ const SignUp = () => {
                     </h2>
                     <p className="text-lg text-gray-500">
                       <Link to="/signup">
-                        Click here to create a new account!
+                        Click <u>here</u> to create a new account!
                       </Link>
                     </p>
                   </div>

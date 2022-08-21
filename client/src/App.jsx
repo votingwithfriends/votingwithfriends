@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import DashBoard from "./pages/Dashboard";
 import CreateNewPoll from "./pages/CreateNewPoll";
+import Polls from "./pages/Open-Polls";
 
 // TO-DO: Set up routing later
 
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/dashboard" element={<DashBoard />} />
           <Route path="/createnewpoll" element={<CreateNewPoll />} />
+          <Route path="/poll" element={<Polls />} />
         </Routes>
       </Router>
     </Theme.Provider>

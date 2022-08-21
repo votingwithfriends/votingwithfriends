@@ -33,7 +33,7 @@ const CreateNewPoll = () => {
             ></p>
             <div className="w-60 ">
               {/*Next Step Button */}
-              <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-700">
+              <button className="dark: dark: dark: w-full rounded-full bg-blue-500 py-4 font-bold text-white transition  duration-200 hover:bg-blue-600 dark:bg-cyan-500 dark:hover:bg-cyan-600">
                 Next Step
               </button>
             </div>
