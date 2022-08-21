@@ -3,7 +3,7 @@
     <style>
       .cls-1,
       .cls-13 {
-        fill: #5d21d1;
+        fill: rgb(6, 182, 212);
       }
 
       .cls-2,
@@ -73,7 +73,7 @@
       .cls-7,
       .cls-8,
       .cls-9 {
-        stroke: #2e186a;
+        stroke: rgb(0, 0, 0);
       }
 
       .cls-9 {

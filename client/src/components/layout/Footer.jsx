@@ -1,8 +1,8 @@
 import { IoLogoTwitter, IoLogoGithub } from "react-icons/io5";
 const Footer = () => {
   return (
-    <footer className="w-full bg-slate-100 p-6 dark:bg-deep-darker">
-      <div className="mx-auto w-full max-w-screen-xl">
+    <footer className="w-full bg-slate-100 p-6 dark:bg-black">
+      <div className="mx-auto mt-12 w-full max-w-screen-xl">
         <article className="text-center md:text-left">
           <section className="flex flex-col gap-y-4">
             <p className="text-lg font-black leading-none">
@@ -22,7 +22,7 @@ const Footer = () => {
               </li>
             </ul>
           </section>
-          <section className="text-center">
+          <section className="mt-12 text-center">
             <small>&copy; 2022 VotingWithFriends</small>
           </section>
         </article>

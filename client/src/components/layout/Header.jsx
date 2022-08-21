@@ -25,7 +25,7 @@ const Header = () => {
           </li>
           <li>
             <Link
-              className="rounded bg-deep-dark px-4 py-2 text-white hover:bg-green-600 dark:bg-teal-500 dark:hover:bg-teal-700"
+              className="rounded bg-zinc-900 px-4 py-2 text-white hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500"
               to="/signup"
             >
               Sign Up
