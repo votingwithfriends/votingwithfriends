@@ -8,8 +8,6 @@ import DashBoard from "./pages/Dashboard";
 import CreateNewPoll from "./pages/CreateNewPoll";
 import Polls from "./pages/Open-Polls";
 
-// TO-DO: Set up routing later
-
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(
     window.matchMedia("(prefers-color-scheme:dark)").matches

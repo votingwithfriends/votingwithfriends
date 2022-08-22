@@ -3,12 +3,44 @@ import Layout from "../components/layout/Layout";
 import MotionWrapper from "../components/layout/MotionWrapper";
 import { AiOutlineMail } from "react-icons/ai";
 import { GrLock } from "react-icons/gr";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import { useState } from "react";
+import Auth from "../utils/auth";
 
 //NOTES:
 // - Kind of want to remove the right side text
 // - Center Login section on page
 
 const SignUp = () => {
+  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [login, { error }] = useMutation(LOGIN_USER);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await login({
+        variables: { ...formState },
+      });
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.error(err);
+    }
+
+    setFormState({
+      email: "",
+      password: "",
+    });
+  };
+
   return (
     <Layout>
       <MotionWrapper>
@@ -18,7 +50,7 @@ const SignUp = () => {
               <div className="-mx-10 flex flex-wrap items-center">
                 <div className="w-full px-10 lg:w-1/2">
                   <div className="rounded-lg bg-white px-6 py-12 shadow-2xl lg:px-20 lg:py-24">
-                    <form action="#">
+                    <form onSubmit={handleFormSubmit}>
                       <h3 className="font-heading mb-10 text-2xl font-bold dark:text-gray-900">
                         <p className="text-3xl">Login</p>
                       </h3>
@@ -33,6 +65,10 @@ const SignUp = () => {
                         <input
                           className="w-full rounded-r-full py-4 pr-6 pl-4 text-gray-900 placeholder-gray-900 focus:outline-none"
                           type="email"
+                          name="email"
+                          id="email"
+                          value={formState.email}
+                          onChange={handleChange}
                           placeholder="Example@Email.com"
                         />
                       </div>
@@ -47,12 +83,19 @@ const SignUp = () => {
                         <input
                           className="w-full rounded-r-full py-4 pr-6 pl-4 text-gray-900 placeholder-gray-900 focus:outline-none"
                           type="password"
+                          name="password"
+                          id="password"
+                          value={formState.password}
+                          onChange={handleChange}
                           placeholder="Password"
                         />
                       </div>
 
                       {/*GET STARTED BUTTON */}
-                      <button className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
+                      <button
+                        type="submit"
+                        className="w-full rounded-full bg-blue-500 py-4 font-bold text-white transition duration-200 hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500"
+                      >
                         Login
                       </button>
                     </form>

@@ -7,6 +7,7 @@ const { resolvers, typeDefs } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 const PORT = process.env.PORT || 3001;
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -27,6 +28,12 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
   // Launch server once connection to MongoDB has been established
+  if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../../client/dist")));
+  }
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+  });
   db.once("open", () => {
     app.listen(PORT, () => {
       console.log(
