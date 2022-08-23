@@ -25,3 +25,13 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const ADD_POLL = gql`
+  mutation Mutation($title: String!) {
+    addPoll(title: $title) {
+      _id
+      title
+      is_open
+    }
+  }
+`;
