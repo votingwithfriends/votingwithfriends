@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Theme } from "../../context/Theme";
 import Header from "./Header";
 import Footer from "./Footer";
