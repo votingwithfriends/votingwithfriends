@@ -9,6 +9,7 @@ import DashBoard from "./pages/Dashboard";
 import CreateNewPoll from "./pages/CreateNewPoll";
 import Polls from "./pages/Open-Polls";
 import Auth from "./utils/auth";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(
@@ -29,8 +30,22 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/dashboard" element={<DashBoard />} />
-            <Route path="/new-poll" element={<CreateNewPoll />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashBoard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/new-poll"
+              element={
+                <ProtectedRoute>
+                  <CreateNewPoll />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/polls" element={<Polls />} />
           </Routes>
         </Router>
