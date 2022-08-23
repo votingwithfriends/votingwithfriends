@@ -1,7 +1,7 @@
 import MotionWrapper from "../components/layout/MotionWrapper";
 import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
-import SideBar from "../components/SideBar";
+import { Button } from "@material-tailwind/react";
 
 //NOTES:
 // SideBar looks good. Needs to scroll with the page.
@@ -20,19 +20,17 @@ const Dashboard = () => {
                   <div className="mb-0 rounded-xl px-0">
                     <div className="flex flex-wrap items-center px-4 py-2">
                       <div className="relative w-full max-w-full flex-1 flex-grow">
-                        <h3 className="text-base font-semibold text-gray-900 dark:text-gray-50">
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
                           Your Polls
                         </h3>
                       </div>
                       <div className="relative w-full max-w-full flex-1 flex-grow text-right">
-                        <button
-                          className="mr-1 mb-1 bg-blue-500 px-3 py-1 text-xs font-bold uppercase text-white outline-none transition-all duration-150 ease-linear focus:outline-none active:bg-blue-600 dark:bg-gray-100 dark:text-gray-800 dark:active:text-gray-700"
-                          type="button"
-                        >
+                        <Button className="scale-90 text-xs hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
                           See all
-                        </button>
+                        </Button>
                       </div>
                     </div>
+
                     <div className="block w-full overflow-x-auto">
                       <table className="w-full border-collapse items-center bg-transparent">
                         <thead>
@@ -93,17 +91,14 @@ const Dashboard = () => {
                   <div className="mb-0 border-0 px-0">
                     <div className="flex flex-wrap items-center px-4 py-2">
                       <div className="relative w-full max-w-full flex-1 flex-grow">
-                        <h3 className="text-base font-semibold text-gray-900 dark:text-gray-50">
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
                           Recent Polls
                         </h3>
                       </div>
                       <div className="relative w-full max-w-full flex-1 flex-grow text-right">
-                        <button
-                          className="mr-1 mb-1 rounded bg-blue-500 px-3 py-1 text-xs font-bold uppercase text-white outline-none transition-all duration-150 ease-linear focus:outline-none active:bg-blue-600 dark:bg-gray-100 dark:text-gray-800 dark:active:text-gray-700"
-                          type="button"
-                        >
+                        <Button className="scale-90 text-xs hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
                           See all
-                        </button>
+                        </Button>
                       </div>
                     </div>
                     <div className="block w-full">

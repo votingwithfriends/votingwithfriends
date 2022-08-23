@@ -59,9 +59,8 @@ const SignUp = () => {
                       <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
                         <span className="inline-block pr-3">
                           {/*EMAIL ICON */}
-                          <div className="text-xl text-black">
-                            <AiOutlineMail />
-                          </div>
+
+                          <AiOutlineMail className="text-xl text-black" />
                         </span>
 
                         {/*PLACEHOLDER */}
@@ -80,9 +79,8 @@ const SignUp = () => {
                       <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
                         <span className="inline-block pr-3">
                           {/*USENAME ICON */}
-                          <div className="text-xl text-black">
-                            <FiUserCheck />
-                          </div>
+
+                          <FiUserCheck className="text-xl text-black" />
                         </span>
                         <input
                           className="w-full rounded-r-full py-4 pr-6 pl-4 text-gray-900 placeholder-gray-900 focus:outline-none"
@@ -99,9 +97,7 @@ const SignUp = () => {
                       <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
                         <span className="inline-block pr-3">
                           {/*LOCK ICON */}
-                          <div className="text-xl text-black">
-                            <GrLock />
-                          </div>
+                          <GrLock className="text-xl text-black" />
                         </span>
                         <input
                           className="w-full rounded-r-full py-4 pr-6 pl-4 text-gray-900 placeholder-gray-900 focus:outline-none"

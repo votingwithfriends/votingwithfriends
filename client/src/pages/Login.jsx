@@ -76,9 +76,7 @@ const SignUp = () => {
                       {/*PASSWORD BOX */}
                       <div className="mb-3 flex items-center rounded-full border border-gray-400 bg-white pl-6">
                         <span className="inline-block border-r border-gray-50 pr-3">
-                          <div className="text-xl">
-                            <GrLock />
-                          </div>
+                          <GrLock className="text-xl text-black" />
                         </span>
                         <input
                           className="w-full rounded-r-full py-4 pr-6 pl-4 text-gray-900 placeholder-gray-900 focus:outline-none"
