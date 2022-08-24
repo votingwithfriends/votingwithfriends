@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 // What you see is a placeholder for a working route. It will be modified to fit our page.
 
 const OpenPolls = () => {
-  const { data: pollData } = useQuery(QUERY_POLLS);
+  const { loading, error, data: pollData } = useQuery(QUERY_POLLS);
+  if (loading) return <h1>Loading polls...</h1>;
   const pollArr = pollData.polls;
 
   return (
