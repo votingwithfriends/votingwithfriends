@@ -46,3 +46,38 @@ export const ADD_CHOICE = gql`
     }
   }
 `;
+
+export const ADD_VOTE = gql`
+  mutation AddVote(
+    $id: ID!
+    $userId: String!
+    $choiceId: String!
+    $rankValue: Int
+  ) {
+    addVote(
+      _id: $id
+      user_id: $userId
+      choice_id: $choiceId
+      rank_value: $rankValue
+    ) {
+      _id
+      title
+      votes {
+        _id
+        rank_value
+        user_id
+        choice_id
+      }
+    }
+  }
+`;
+
+export const UPDATE_POLL = gql`
+  mutation UpdatePoll($pollId: ID!, $isOpen: Boolean) {
+    updatePoll(poll_id: $pollId, is_open: $isOpen) {
+      _id
+      title
+      is_open
+    }
+  }
+`;
