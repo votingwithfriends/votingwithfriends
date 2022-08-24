@@ -73,7 +73,7 @@ const Dashboard = () => {
               </div>
 
               {/* Friends Table */}
-              <div className="relative mx-4 mt-4 flex min-w-0 flex-col break-words rounded-xl shadow-lg dark:bg-gray-800">
+              {/*<div className="relative mx-4 mt-4 flex min-w-0 flex-col break-words rounded-xl shadow-lg dark:bg-gray-800">
                 <div className="shadow-m w-full overflow-hidden rounded-lg">
                   <div className="w-full overflow-x-auto">
                     <table className="w-full">
@@ -93,7 +93,7 @@ const Dashboard = () => {
                     </table>
                   </div>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>
