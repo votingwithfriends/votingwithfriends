@@ -7,10 +7,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import DashBoard from "./pages/Dashboard";
 import CreateNewPoll from "./pages/CreateNewPoll";
-import Polls from "./pages/Open-Polls";
+import Polls from "./pages/OpenPolls";
 import Auth from "./utils/auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Vote from "./pages/Vote";
+import OpenPolls from "./pages/OpenPolls";
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/vote" element={<Vote />} />
+            <Route path="/openpolls" element={<OpenPolls />} />
             <Route
               path="/dashboard"
               element={
