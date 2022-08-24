@@ -16,6 +16,11 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      polls {
+        _id
+        title
+        is_open
+      }
       friendCount
       friends {
         _id

@@ -2,19 +2,22 @@ import MotionWrapper from "../components/layout/MotionWrapper";
 import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
 import { Button } from "@material-tailwind/react";
+import { QUERY_ME } from "../utils/queries";
+import { useQuery } from "@apollo/client";
 
 //NOTES:
 // SideBar looks good. Needs to scroll with the page.
-// remove svg's
 
 const Dashboard = () => {
+  const { data: userData } = useQuery(QUERY_ME);
+  const userPolls = userData.me.polls;
   return (
     <Layout>
       <MotionWrapper>
         <div className="content-center">
           <div className="flex min-h-screen flex-col text-black dark:bg-transparent dark:text-white ">
             <div className="m-10 h-full md:m-8">
-              {/* Your Polls */}
+              {console.log(userPolls)}
               <div className="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2">
                 <div className="relative mb-4 flex w-full min-w-0 flex-col break-words rounded-xl shadow-lg dark:bg-gray-800 lg:mb-0">
                   <div className="mb-0 rounded-xl px-0">
@@ -23,11 +26,6 @@ const Dashboard = () => {
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
                           Your Polls
                         </h3>
-                      </div>
-                      <div className="relative w-full max-w-full flex-1 flex-grow text-right">
-                        <Button className="scale-90 text-xs hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
-                          See all
-                        </Button>
                       </div>
                     </div>
 
@@ -43,43 +41,17 @@ const Dashboard = () => {
                           </tr>
                         </thead>
                         <tbody className="divide-y bg-white dark:divide-slate-700 dark:bg-gray-800">
-                          <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
-                            <th className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 text-left align-middle ">
-                              Is jakes carpet guy cool??????
-                            </th>
-                            <td className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 align-middle"></td>
-                            <td className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 align-middle">
-                              <div className="flex items-center"></div>
-                            </td>
-                          </tr>
-                          <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
-                            <th className="text-s  p-4 px-4 text-left align-middle">
-                              What Gatorade flaor is best?
-                            </th>
-                            <td className="whitespace-nowrap text-xs"></td>
-                            <td className="whitespace-nowrap p-4 px-4 align-middle text-xs"></td>
-                          </tr>
-                          <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
-                            <th className="text-s  p-4 px-4 text-left align-middle">
-                              What should we name the dog?
-                            </th>
-                            <td className="whitespace-nowrap text-xs"></td>
-                            <td className="whitespace-nowrap p-4 px-4 align-middle text-xs"></td>
-                          </tr>
-                          <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
-                            <th className="text-s  p-4 px-4 text-left align-middle">
-                              What movie should we see?
-                            </th>
-                            <td className="whitespace-nowrap text-xs"></td>
-                            <td className="whitespace-nowrap p-4 px-4 align-middle text-xs"></td>
-                          </tr>
-                          <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
-                            <th className="text-s p-4 px-4 text-left align-middle">
-                              Poll 4
-                            </th>
-                            <td className="whitespace-nowrap text-xs"></td>
-                            <td className="whitespace-nowrap p-4 px-4 align-middle text-xs"></td>
-                          </tr>
+                          {userPolls.map(({ title, ...rest }) => (
+                            <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
+                              <th className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 text-left align-middle ">
+                                {title}
+                              </th>
+                              <td className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 align-middle"></td>
+                              <td className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 align-middle">
+                                <div className="flex items-center"></div>
+                              </td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
@@ -92,18 +64,8 @@ const Dashboard = () => {
                     <div className="flex flex-wrap items-center px-4 py-2">
                       <div className="relative w-full max-w-full flex-1 flex-grow">
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
-                          Recent Polls
+                          Friends
                         </h3>
-                      </div>
-                      <div className="relative w-full max-w-full flex-1 flex-grow text-right">
-                        <Button className="scale-90 text-xs hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500">
-                          See all
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="block w-full">
-                      <div className="whitespace-nowrap border border-l-0 border-r-0 border-solid border-gray-200 bg-gray-100 px-4 py-3 text-left align-middle text-xs font-semibold text-gray-500 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100">
-                        All Recent Polls
                       </div>
                     </div>
                   </div>
