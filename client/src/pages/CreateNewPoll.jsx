@@ -11,13 +11,14 @@ import { ADD_CHOICE } from "../utils/mutations";
 
 const CreateNewPoll = () => {
   const [addPoll, { error }] = useMutation(ADD_POLL);
-  const [addChoice, { badChoice }] = useMutation(ADD_CHOICE);
   const [pollId, setPollId] = useState("");
+  const [addChoice, { badChoice }] = useMutation(ADD_CHOICE);
   const [formState, setFormState] = useState({
     title: "",
   });
+
   const [choiceState, setChoiceState] = useState({
-    poll_id: pollId,
+    // poll_id: pollId,
     choice_name: "",
   });
 
@@ -56,7 +57,7 @@ const CreateNewPoll = () => {
     event.preventDefault();
     try {
       const { data } = await addChoice({
-        variables: { ...choiceState },
+        variables: { ...choiceState, poll_id: pollId },
       });
       console.log(choiceState);
     } catch (err) {
