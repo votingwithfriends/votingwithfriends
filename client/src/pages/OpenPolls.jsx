@@ -24,7 +24,7 @@ const OpenPolls = () => {
                 className="rounded bg-blue-100 transition-all ease-in-out dark:bg-zinc-700"
                 key={_id}
               >
-                <Link to={`/vote/${_id}`}>
+                <Link to={is_open ? `/vote/${_id}` : `/voteresults/${_id}`}>
                   <div className="block p-4">
                     <div className="flex items-center justify-between">
                       <div>
