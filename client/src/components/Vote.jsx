@@ -1,11 +1,13 @@
-import Layout from "../components/layout/Layout";
-import MotionWrapper from "../components/layout/MotionWrapper";
+import Layout from "./layout/Layout";
+import MotionWrapper from "./layout/MotionWrapper";
 import { QUERY_POLL } from "../utils/queries";
 import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
 
 const Vote = () => {
+  let params = useParams();
   const { loading, error, data } = useQuery(QUERY_POLL, {
-    variables: { id: "63040aba1e97eddde0783bad" },
+    variables: { id: params.id },
   });
 
   if (loading) return null;
@@ -17,7 +19,6 @@ const Vote = () => {
     <Layout>
       <MotionWrapper>
         <article>
-          {console.log(pollChoices)}
           <p className="mb-4 font-bold md:text-2xl">
             Please select your top three options below, leaving the rest blank.
           </p>

@@ -10,7 +10,7 @@ import CreateNewPoll from "./pages/CreateNewPoll";
 import Polls from "./pages/OpenPolls";
 import Auth from "./utils/auth";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Vote from "./pages/Vote";
+import Vote from "./components/Vote";
 import OpenPolls from "./pages/OpenPolls";
 
 const App = () => {
@@ -51,6 +51,7 @@ const App = () => {
               }
             />
             <Route path="/polls" element={<Polls />} />
+            <Route path="/vote/:id" element={<Vote />} />
           </Routes>
         </Router>
       </Theme.Provider>
