@@ -1,7 +1,6 @@
 import MotionWrapper from "../components/layout/MotionWrapper";
 import Layout from "../components/layout/Layout";
 import React, { useState } from "react";
-import { Button } from "@material-tailwind/react";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 
