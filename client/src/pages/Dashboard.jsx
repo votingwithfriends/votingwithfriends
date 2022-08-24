@@ -17,11 +17,11 @@ const Dashboard = () => {
   return (
     <Layout>
       <MotionWrapper>
-        <div className="content-center">
+        <div className="mt-20 content-center">
           <div className="flex min-h-screen flex-col text-black dark:bg-transparent dark:text-white ">
             <div className="m-10 h-full md:m-8">
               <div className="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2">
-                <div className="relative mb-4 flex w-full min-w-0 flex-col break-words rounded-xl shadow-lg dark:bg-gray-800 lg:mb-0">
+                <div className="relative mb-4 flex w-full min-w-0 flex-col break-words rounded-xl shadow-lg dark:bg-zinc-700 lg:mb-0">
                   <div className="mb-0 rounded-xl px-0">
                     <div className="flex flex-wrap items-center px-4 py-2">
                       <div className="relative w-full max-w-full flex-1 flex-grow">
@@ -42,11 +42,11 @@ const Dashboard = () => {
                             <th className="min-w-140-px whitespace-nowrap border border-l-0 border-r-0 border-solid border-gray-200 px-4 py-3 text-left align-middle text-xs font-semibold uppercase text-gray-500 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-100" />
                           </tr>
                         </thead>
-                        <tbody className="divide-y bg-white dark:divide-slate-700 dark:bg-gray-800">
+                        <tbody className="divide-y bg-white dark:divide-slate-700 dark:bg-zinc-800">
                           {userPolls.map(({ title, _id, ...rest }) => (
                             <tr
                               key={_id}
-                              className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900"
+                              className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-zinc-800 dark:text-gray-400 dark:hover:bg-gray-900"
                             >
                               <th className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 text-left align-middle ">
                                 <Link to={`/vote/${_id}`}>{title}</Link>
