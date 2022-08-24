@@ -75,35 +75,32 @@ const CreateNewPoll = () => {
             </div>
           </form>
           {/*Bottom Border */}
-          <div className="h-[1px] w-full bg-gray-600"></div>
-          {/*<form className="hidden" id="choices">
-            <h2 className="mb-4 text-xl font-bold">Enter your choices</h2>
+          <div class="w-full h-[1px] bg-blue-500"></div>
+   <form onSubmit={handleFormSubmit}>
+    <h2 class="font-bold text-xl mb-4">Enter your choices</h2>
+    <div
+      class="grid grid-cols-[1fr_auto] border-2 border-blue-500 rounded overflow-hidden"
+    >
+      <input
+        id="choice-name"
+        class="p-3"
+        type="text"
+        name="choice"
+        value={formState.choice}
+        placeholder="Enter choice name"
+        onChange={handleChange} 
+      />
+      <button class="p-3 bg-blue-500 text-white" type="submit">Add choice</button>
+    </div>
+    <p class="text-sm text-gray-600">*3 choices minimum</p>
+  </form>
+  <button
+    id="finish-btn"
+    class="w-full hidden p-2 transition-all ease-in-out bg-gray-400 hover:bg-green-400 text-white rounded"
+  >Finish creating poll</button>
+  <ul class="flex flex-col md:grid grid-cols-2 gap-4" id="choice_name">
 
-            {/*<div className="grid grid-cols-[1fr_auto] overflow-hidden rounded border-2 border-green-400">
-              <input
-                id="choice-name"
-                className="p-3"
-                type="text"
-                placeholder="Enter choice name"
-                required
-              />
-              <button className="bg-green-500 p-3 text-white" type="submit">
-                Add choice
-              </button>
-            </div>
-  
-            <p className="text-sm text-gray-600">*3 choices minimum</p>
-          </form>
-          <button
-            id="finish-btn"
-            className="hidden w-full rounded bg-gray-400 p-2 text-white transition-all ease-in-out hover:bg-green-400"
-          >
-            Finish creating poll
-          </button>
-          <ul
-            className="flex grid-cols-2 flex-col gap-4 md:grid"
-            id="choiceList"
-          ></ul>*/}
+  </ul>
         </article>
       </MotionWrapper>
     </Layout>

@@ -20,5 +20,8 @@
   "homepage": "https://github.com/votingwithfriends/votingwithfriends#readme",
   "devDependencies": {
     "concurrently": "^7.3.0"
+  },
+  "dependencies": {
+    "@material-tailwind/react": "^1.2.3"
   }
 }
