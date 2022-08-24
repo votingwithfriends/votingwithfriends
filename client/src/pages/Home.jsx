@@ -6,12 +6,8 @@ import supportImage from "../assets/support.svg";
 import teamImage from "../assets/team.svg";
 import { Link } from "react-router-dom";
 import { IoExitOutline } from "react-icons/io5";
-import { QUERY_POLLS } from "../utils/queries";
-import { useQuery } from "@apollo/client";
 
 const Home = () => {
-  const { data: pollData } = useQuery(QUERY_POLLS);
-
   return (
     <Layout>
       <>
@@ -23,7 +19,6 @@ const Home = () => {
                   <p>Reach</p>
                   <p>Meaningful</p>
                   <p>Decisions</p>
-                  {console.log(pollData)}
                 </section>
                 <section className="mt-6 flex w-full flex-col gap-y-8 leading-loose md:w-3/4 lg:gap-y-6">
                   <p>

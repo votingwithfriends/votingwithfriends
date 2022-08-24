@@ -14,14 +14,14 @@ import ThemeToggle from "../ThemeToggle";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/Auth";
 
 const Header = () => {
-  const { data: userData } = useQuery(QUERY_ME);
+  const { loggedIn, setLoggedIn, me } = useContext(AuthContext);
+  // const { loading, data: userData, refetch } = useQuery(QUERY_ME);
 
   const [hamburgerState, setHamburgerState] = useState(false);
-  const loggedIn = useContext(AuthContext);
 
   return (
     <header className="relative mx-auto w-full max-w-screen-xl p-6">
@@ -66,17 +66,20 @@ const Header = () => {
         <ul className="hidden items-center gap-x-6 lg:flex ">
           {loggedIn ? (
             <>
-              {userData && (
-                <li>
+              <li>
+                {me && me.username && (
                   <p className="cursor-pointer rounded border-2 border-blue-500 px-4 py-[6px] font-bold text-blue-500 dark:border-cyan-500 dark:text-cyan-500">
-                    {userData.me.username}
+                    {me.username}
                   </p>
-                </li>
-              )}
+                )}
+              </li>
 
               <li>
                 <button
-                  onClick={() => Auth.logout()}
+                  onClick={() => {
+                    Auth.logout();
+                    setLoggedIn(false);
+                  }}
                   className="rounded bg-zinc-900 px-4 py-2 text-white hover:bg-blue-600 dark:bg-cyan-600 dark:hover:bg-cyan-500"
                 >
                   Logout
@@ -127,11 +130,9 @@ const Header = () => {
               </li>
               {Auth.loggedIn() ? (
                 <>
-                  {userData && (
+                  {me && (
                     <li className="flex items-center gap-x-2">
-                      <p className="text-xl font-bold">
-                        {userData.me.username}
-                      </p>
+                      <p className="text-xl font-bold">{me.username}</p>
                       <IoPerson />
                     </li>
                   )}

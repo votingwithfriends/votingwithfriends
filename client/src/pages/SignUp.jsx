@@ -1,5 +1,5 @@
 import Layout from "../components/layout/Layout";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import MotionWrapper from "../components/layout/MotionWrapper";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiUserCheck } from "react-icons/fi";
@@ -7,12 +7,14 @@ import { GrLock } from "react-icons/gr";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import { AuthContext } from "../context/Auth";
 
 //NOTES:
 //Needs a cool catch phrase
 //Terms and conditions are commented out
 
 const SignUp = () => {
+  const { setLoggedIn } = useContext(AuthContext);
   const [addUser, { error }] = useMutation(ADD_USER);
   const [formState, setFormState] = useState({
     username: "",
@@ -36,6 +38,7 @@ const SignUp = () => {
         variables: { ...formState },
       });
       Auth.login(data.addUser.token);
+      setLoggedIn(true);
     } catch (err) {
       console.log(err);
     }

@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 // SideBar looks good. Needs to scroll with the page.
 
 const Dashboard = () => {
-  const { data: userData } = useQuery(QUERY_ME);
+  const { loading, error, data: userData } = useQuery(QUERY_ME);
+  if (loading) return <h1>Loading data...</h1>;
   const userPolls = userData.me.polls;
   return (
     <Layout>
@@ -41,7 +42,10 @@ const Dashboard = () => {
                         </thead>
                         <tbody className="divide-y bg-white dark:divide-slate-700 dark:bg-gray-800">
                           {userPolls.map(({ title, _id, ...rest }) => (
-                            <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
+                            <tr
+                              key={_id}
+                              className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900"
+                            >
                               <th className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 text-left align-middle ">
                                 <Link to={`/vote/${_id}`}>{title}</Link>
                               </th>

@@ -5,7 +5,8 @@ import { AiOutlineMail } from "react-icons/ai";
 import { GrLock } from "react-icons/gr";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/Auth";
 import Auth from "../utils/auth";
 
 //NOTES:
@@ -13,6 +14,7 @@ import Auth from "../utils/auth";
 // - Center Login section on page
 
 const SignUp = () => {
+  const { setLoggedIn } = useContext(AuthContext);
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error }] = useMutation(LOGIN_USER);
   const handleChange = (event) => {
@@ -31,6 +33,7 @@ const SignUp = () => {
         variables: { ...formState },
       });
       Auth.login(data.login.token);
+      setLoggedIn(true);
     } catch (err) {
       console.error(err);
     }
