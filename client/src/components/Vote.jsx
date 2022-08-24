@@ -15,6 +15,14 @@ const Vote = () => {
 
   const pollChoices = data.poll.choices;
 
+  // const handleFormSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     const { submitData } = await
+  //   }
+  // }
+
   return (
     <Layout>
       <MotionWrapper>

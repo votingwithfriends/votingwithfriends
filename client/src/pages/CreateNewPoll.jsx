@@ -75,7 +75,7 @@ const CreateNewPoll = () => {
     <Layout>
       <MotionWrapper>
         <article
-          className="mx-auto flex w-full max-w-screen-md flex-col gap-y-10 pb-10"
+          className="mx-auto mt-20 flex w-full max-w-screen-md flex-col gap-y-10 pb-10"
           data-poll-id=""
           id="poll-parent"
         >
