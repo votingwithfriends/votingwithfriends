@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Vote from "./components/Vote";
 import OpenPolls from "./pages/OpenPolls";
 import getMe from "./utils/me";
+import VoteResults from "./components/VoteResults";
 
 const App = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(
@@ -38,6 +39,7 @@ const App = () => {
               }
             />
             <Route path="/openpolls" element={<OpenPolls />} />
+            <Route path="/voteresults" element={<VoteResults />} />
             <Route
               path="/dashboard"
               element={
