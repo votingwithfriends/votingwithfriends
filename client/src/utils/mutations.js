@@ -37,11 +37,12 @@ export const ADD_POLL = gql`
 `;
 
 export const ADD_CHOICE = gql`
-mutation addChoice($addChoicePollId2: ID!, $addChoiceChoiceName2: String!) {
-  addChoice(poll_id: $addChoicePollId2, choice_name: $addChoiceChoiceName2) {
-    choices {
-      choice_name
-      _id
+  mutation addChoice($poll_id: ID!, $choice_name: String!) {
+    addChoice(poll_id: $poll_id, choice_name: $choice_name) {
+      choices {
+        choice_name
+        _id
+      }
     }
   }
-}`
+`;

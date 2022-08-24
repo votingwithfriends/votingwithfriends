@@ -101,13 +101,13 @@ const resolvers = {
         if (!poll) {
           throw new AuthenticationError("No poll found with this ID");
         }
-        if (poll.user.valueOf() === context.user._id) {
-          return await Poll.findByIdAndUpdate(
-            { _id: poll_id },
-            { $push: { choices: { choice_name } } },
-            { new: true }
-          );
-        }
+        // if (poll.user.valueOf() === context.user._id) {
+        return await Poll.findByIdAndUpdate(
+          { _id: poll_id },
+          { $push: { choices: { choice_name } } },
+          { new: true }
+        );
+        // }
       }
       throw new AuthenticationError("Only poll createer can create a choice");
     },
