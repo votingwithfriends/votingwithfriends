@@ -2,9 +2,11 @@
   "name": "votingwithfriends",
   "version": "1.0.0",
   "description": "Social ranked choice voting application",
-  "main": "index.js",
+  "main": "server/build/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/build/server.js",
+    "dev": "concurrently \" cd server && npm run dev \" \"cd client && npm run dev\"",
+    "install": "cd server && npm i && ../client && npm i"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/votingwithfriends/votingwithfriends/issues"
   },
-  "homepage": "https://github.com/votingwithfriends/votingwithfriends#readme"
+  "homepage": "https://github.com/votingwithfriends/votingwithfriends#readme",
+  "devDependencies": {
+    "concurrently": "^7.3.0"
+  },
+  "dependencies": {
+    
+  }
 }
