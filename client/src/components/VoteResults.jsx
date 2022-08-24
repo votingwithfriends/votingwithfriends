@@ -5,8 +5,9 @@ import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 const VoteResults = () => {
+  let params = useParams();
   const { loading, error, data } = useQuery(QUERY_POLL_VOTES, {
-    variables: { id: "63040aba1e97eddde0783bad" },
+    variables: { id: params.id },
   });
 
   if (loading) return <h1>Loading poll results...</h1>;

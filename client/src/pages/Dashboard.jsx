@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 const Dashboard = () => {
   const { loading, error, data: userData } = useQuery(QUERY_ME);
   if (loading) return <h1>Loading data...</h1>;
+  if (error) return `Error: ${error}`;
+
   const userPolls = userData.me.polls;
   return (
     <Layout>

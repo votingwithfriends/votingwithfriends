@@ -39,7 +39,7 @@ const App = () => {
               }
             />
             <Route path="/openpolls" element={<OpenPolls />} />
-            <Route path="/voteresults" element={<VoteResults />} />
+            <Route path="/voteresults/:id" element={<VoteResults />} />
             <Route
               path="/dashboard"
               element={
