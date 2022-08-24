@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 //NOTES:
 // SideBar looks good. Needs to scroll with the page.
@@ -41,10 +42,10 @@ const Dashboard = () => {
                           </tr>
                         </thead>
                         <tbody className="divide-y bg-white dark:divide-slate-700 dark:bg-gray-800">
-                          {userPolls.map(({ title, ...rest }) => (
+                          {userPolls.map(({ title, _id, ...rest }) => (
                             <tr className="bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-900">
                               <th className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 text-left align-middle ">
-                                {title}
+                                <Link to={`/vote/${_id}`}>{title}</Link>
                               </th>
                               <td className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 align-middle"></td>
                               <td className="text-s whitespace-nowrap border-t-0 border-l-0 border-r-0 p-4 px-4 align-middle">
