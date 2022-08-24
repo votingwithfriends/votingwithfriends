@@ -8,43 +8,39 @@ const OpenPolls = () => {
   return (
     <Layout>
       <MotionWrapper>
-        <article class="mx-auto w-full max-w-screen-lg">
-          <div class="flex items-center justify-between">
-            <h3 class="text-2xl font-bold md:text-3xl">
-              Poll Results for:
-              <span class="ml-1 text-2xl font-bold text-blue-500 md:text-3xl"></span>
-            </h3>
+        <article className="mx-auto w-full max-w-screen-md">
+          <h2 className="mb-8 text-xl font-bold md:text-3xl">Polls</h2>
+          <ul className="flex flex-col gap-y-4">
+            <li className="rounded border border-green-200 transition-all ease-in-out hover:border-green-500">
+              <a href="/dashboard/poll/" className="block p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-bold"></p>
+                    <p className="text-gray-600"></p>
+                  </div>
+                  <p className="rounded bg-green-500 py-2 px-4 text-white">
+                    Poll Open
+                  </p>
+                </div>
+              </a>
 
-            <button
-              type="submit"
-              class="rounded bg-red-400 p-2 text-white"
-              id="close-poll-btn"
-              data-poll_id="{{id}}"
-            >
-              Close Poll
-            </button>
-
-            <p class="rounded bg-gray-200 p-2">Poll has ended</p>
-          </div>
-          <h4 class="mb-4 text-lg font-bold">
-            Number of Voters:
-            <span class="rounded border border-green-400 px-2 text-green-700"></span>
-          </h4>
-          <ul class="hidden">
-            <li
-              data-choice-name="{{choice_name}}"
-              data-choice-rank="{{rank_score}}"
-            >
-              <span class="font-bold text-green-600"></span>: points
+              <a href="/dashboard/results/" className="block p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-bold"></p>
+                    <p className="text-gray-600"></p>
+                  </div>
+                  <p className="rounded border-2 border-gray-200 py-2 px-4 text-center text-sm">
+                    Poll Closed
+                    <br />
+                    <span className="font-bold text-green-500">
+                      View Results
+                    </span>
+                  </p>
+                </div>
+              </a>
             </li>
           </ul>
-
-          <script src="/javascript/close-poll.js"></script>
-
-          <canvas
-            class="mx-auto mt-14 w-3/4 md:w-full md:max-w-lg"
-            id="chart"
-          ></canvas>
         </article>
       </MotionWrapper>
     </Layout>
