@@ -17,7 +17,6 @@ const Dashboard = () => {
         <div className="content-center">
           <div className="flex min-h-screen flex-col text-black dark:bg-transparent dark:text-white ">
             <div className="m-10 h-full md:m-8">
-              {console.log(userPolls)}
               <div className="grid grid-cols-1 gap-4 p-4 lg:grid-cols-2">
                 <div className="relative mb-4 flex w-full min-w-0 flex-col break-words rounded-xl shadow-lg dark:bg-gray-800 lg:mb-0">
                   <div className="mb-0 rounded-xl px-0">

@@ -55,7 +55,7 @@ const Header = () => {
             <li>
               <Link
                 className="flex items-center gap-x-2 hover:text-blue-500 dark:hover:text-cyan-500"
-                to="/new-poll"
+                to="/openpolls"
               >
                 View Polls
                 <IoPodium />
